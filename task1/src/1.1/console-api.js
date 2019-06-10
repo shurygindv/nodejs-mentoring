@@ -1,7 +1,7 @@
 const DATA = 'data';
 
-class ConsoleApi {
-    async read(callback) {
+export class ConsoleApi {
+    async read (callback) {
         return new Promise(resolver => process.stdin.once(resolver));
     }
 
@@ -17,7 +17,3 @@ class ConsoleApi {
         process.stdin.once(DATA, listener);
     }
 }
-
-module.exports = {
-    ConsoleApi
-};

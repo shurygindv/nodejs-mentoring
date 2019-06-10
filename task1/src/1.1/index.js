@@ -1,6 +1,4 @@
-const readline = require('readline');
-
-const ConsoleApi = require('./console-api').ConsoleApi;
+import {ConsoleApi} from './console-api';
 
 const consoleApi = new ConsoleApi();
 

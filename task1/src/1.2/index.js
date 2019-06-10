@@ -1,11 +1,11 @@
 const csv = require('csvtojson');
 const fs = require('fs');
 
-const readableCsvStream = fs.createReadStream(__dirname + '/csv/example.csv');
+const readableCsvStream = fs.createReadStream(`${__dirname}/csv/example.csv`);
 
 const createCsvParser = () => csv({
     colParser:{
-        "amount":"omit",
+        "amount": "omit",
     },
     checkType: true,
 });
@@ -17,6 +17,7 @@ const lowercaseHeader = (line, lineIndex) => {
 const logJson = json => console.log(JSON.stringify(json));
 
 createCsvParser()
-    .preFileLine(lowercaseHeader)
+    .on('error', console.error)
     .fromStream(readableCsvStream)
-    .subscribe(logJson);
+    .preFileLine(lowercaseHeader)
+    .subscribe(logJson)
