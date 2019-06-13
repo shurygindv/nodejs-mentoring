@@ -1,5 +1,6 @@
-const csv = require('csvtojson');
-const fs = require('fs');
+import fs from 'fs';
+
+import csv from 'csvtojson';
 
 const logError = message => console.error(message);
 const withErrorBoundary = emitter => emitter.on('error', logError);
