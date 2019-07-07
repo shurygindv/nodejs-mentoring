@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-# copy only package and install it
+# copy only packages and install it
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --no-cache --production
 
