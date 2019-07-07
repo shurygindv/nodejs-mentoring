@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+
+        "outDir": "dist",
+        "moduleResolution": "node",
+
+        "strict": true,
+        "pretty": true,
+        "sourceMap": true,
+        "removeComments": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "allowSyntheticDefaultImports": true,
+    }
+}
