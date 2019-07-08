@@ -25,4 +25,4 @@ RUN yarn build:prod
 # least privilege
 USER node
 
-CMD ["node", "dist/application.js"]
+CMD ["yarn", "start:prod"]

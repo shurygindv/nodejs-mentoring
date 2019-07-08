@@ -1,4 +1,4 @@
-import 'module-alias/register';
+import 'dotenv/config';
 
 import { Sequelize } from 'sequelize';
 import * as express from 'express';
@@ -7,8 +7,7 @@ import * as cors from 'cors';
 import { R } from '@libs/ramda';
 
 import { bootstrap } from './bootstrapper';
-
-const CONNECTION_STRING = 'postgres://test:test1234@db/pg-db-test';
+import { config } from './core/config';
 
 const app = express();
 
@@ -19,7 +18,7 @@ const registerAppDependencies = (app: express.Express): void => {
 }
 
 const initializeDbConnect = (): Sequelize =>
-    new Sequelize(CONNECTION_STRING);
+    new Sequelize(config.connectionString);
 
 const registerRoutes = (route: express.Router) => app.use('/api/v1', route);
 

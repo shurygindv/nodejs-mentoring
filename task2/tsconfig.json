@@ -1,28 +1,23 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-
-        "outDir": "dist",
-        "moduleResolution": "node",
-
-        "strict": true,
-        "strictPropertyInitialization": false,
-
-        "pretty": true,
-        "sourceMap": true,
-        "skipLibCheck": true,
-        "removeComments": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "allowSyntheticDefaultImports": true,
-
-        "baseUrl": "./",
-        "paths": {
-            "@libs/*": ["src/libs/*"],
-        },
-    },
-    "exclude": [
-        "node_modules",
-    ]
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "pretty": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@libs/*": ["./libs/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
