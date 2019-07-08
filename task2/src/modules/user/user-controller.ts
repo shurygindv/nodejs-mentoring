@@ -23,7 +23,7 @@ export const applyUserController = (userService: IUserService): Router => {
     );
 
     userRouter.get('/users', useAsync(async (req, res): Promise<void> => {
-        const users = userService.findAll();
+        const users = await userService.findAll();
 
         res.json(HttpResult.success(users));
     }));

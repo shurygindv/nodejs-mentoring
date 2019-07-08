@@ -15,8 +15,8 @@ export class UserService extends BaseService<typeof User> implements IUserServic
     public async create(user: User): Promise<User> {
         return this.repo.create({
             id: uuidHelper.id(),
-            firstName: user.firstName,
-            lastName: user.lastName,
+            firstName: user.firstname,
+            lastName: user.lastname,
         });
     }
 
