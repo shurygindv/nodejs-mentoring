@@ -34,7 +34,7 @@ export const applyUserController = (userService: IUserService): Router => {
         res.json(HttpResult.success(user));
     }));
 
-    userRouter.get('/users/:id/delete', useAsync(async (req, res): Promise<void> => {
+    userRouter.delete('/users/:id/delete', useAsync(async (req, res): Promise<void> => {
         await userService.deleteById(selectParam(req).id);
 
         res.json(HttpResult.success({}));
