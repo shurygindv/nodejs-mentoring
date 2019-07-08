@@ -7,11 +7,22 @@
         "moduleResolution": "node",
 
         "strict": true,
+        "strictPropertyInitialization": false,
+
         "pretty": true,
         "sourceMap": true,
+        "skipLibCheck": true,
         "removeComments": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "allowSyntheticDefaultImports": true,
-    }
+
+        "baseUrl": "./",
+        "paths": {
+            "@libs/*": ["src/libs/*"],
+        },
+    },
+    "exclude": [
+        "node_modules",
+    ]
 }
