@@ -29,5 +29,6 @@ const routes = bootstrap(connection);
 registerAppDependencies(app);
 R.forEach(registerRoutes, routes)
 
-app.listen(7070, () => console.log(`Started at 7070 port`));
-
+export {
+    app
+};
