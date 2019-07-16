@@ -6,6 +6,11 @@ EXPOSE 7070
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
+RUN apk --no-cache add --virtual native-deps \
+    g++ gcc libgcc libstdc++ linux-headers autoconf automake make nasm python git && \
+    npm install --quiet node-gyp -g
+
+
 # install yarn
 RUN npm install -g yarn
 
@@ -17,7 +22,8 @@ COPY package.json yarn.lock ./
 
 RUN yarn install --frozen-lockfile --no-cache --production
 
-# copy rest
+# copy restyy
+
 COPY . .
 
 RUN yarn build:prod

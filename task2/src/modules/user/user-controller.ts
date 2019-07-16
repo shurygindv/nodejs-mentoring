@@ -7,7 +7,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { useAsync } from '../../helpers/use-async';
 import { HttpResult } from '../../libs/http';
 
-import {IUserService} from './user-service';
+import {IUser, IUserService} from './user-service';
+import {MaybeNull} from "../../types";
 
 export const applyUserController = (userService: IUserService): Router => {
     const userRouter = Router();
@@ -16,20 +17,20 @@ export const applyUserController = (userService: IUserService): Router => {
         '/users/create',
         useValidator(CreateUserDto.scheme),
         useAsync(async (req, res): Promise<void> => {
-            const created = await userService.create(res.locals.validated);
+            const created: IUser = await userService.create(res.locals.validated);
 
             res.json(HttpResult.success(created));
         })
     );
 
     userRouter.get('/users', useAsync(async (req, res): Promise<void> => {
-        const users = await userService.findAll();
+        const users: IUser[] = await userService.findAll();
 
         res.json(HttpResult.success(users));
     }));
 
     userRouter.get('/users/:id', useAsync(async (req, res): Promise<void> => {
-        const user = await userService.findById(selectParam(req).id);
+        const user: MaybeNull<IUser> = await userService.findById(selectParam(req).id);
 
         res.json(HttpResult.success(user));
     }));
@@ -40,6 +41,5 @@ export const applyUserController = (userService: IUserService): Router => {
         res.json(HttpResult.success({}));
     }));
 
-
     return userRouter;
-}
+};

@@ -2,18 +2,18 @@ import { useValidationScheme } from '@libs/validator';
 
 export class CreateUserDto {
     public static scheme = useValidationScheme({
-        "id": {
-            "type": "integer",
-        },
-        "firstName": {
+        "login": {
             "type": "string",
         },
-        "lastName": {
+        "password": {
             "type": "string"
+        },
+        "age": {
+            "type": "integer"
         }
-    })
+    });
 
-    public id: string;
-    public firstName: string;
-    public lastName: string;
+    public login: string;
+    public password: string;
+    public age: number;
 }

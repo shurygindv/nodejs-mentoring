@@ -1,23 +1,33 @@
 import Sequelize from 'sequelize';
 
-export class User extends Sequelize.Model {
+export class UserModel extends Sequelize.Model {
     public id: string;
-    public firstname: string;
-    public lastname: string;
+    public login: string;
+    public password: string;
+    public age: number;
+    public isDeleted: boolean;
 }
 
-export const getUserModel = (sequelize: Sequelize.Sequelize): typeof User => {
-    User.init({
+export const initUserModel = (sequelize: Sequelize.Sequelize): typeof UserModel => {
+    UserModel.init({
         id: {
             type: Sequelize.STRING,
             primaryKey: true,
         },
-        firstname: {
+        login: {
             type: Sequelize.STRING,
             allowNull: false
         },
-        lastname: {
+        password: {
             type: Sequelize.STRING,
+            allowNull: false
+        },
+        age: {
+            type: Sequelize.NUMBER,
+            allowNull: false
+        },
+        isDeleted: {
+            type: Sequelize.BOOLEAN,
             allowNull: false
         }
     }, {
@@ -26,5 +36,5 @@ export const getUserModel = (sequelize: Sequelize.Sequelize): typeof User => {
         modelName: 'user'
     });
 
-    return User;
+    return UserModel;
 };

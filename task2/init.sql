@@ -1,14 +1,16 @@
 CREATE TABLE Users (
   id VARCHAR(100) PRIMARY KEY,
-  firstName VARCHAR(100) not null,
-  lastName VARCHAR(100) not null
+  age INTEGER not null,
+  login VARCHAR(100) not null,
+  password VARCHAR(100) not null,
+  isDeleted BOOLEAN  not null,
 );
 
-INSERT INTO Users (id, firstName, lastName)
-VALUES ('1', 'Aristrakh', 'Kaultsyn');
+INSERT INTO Users (id, age, login, password, isDeleted)
+VALUES ('1', 18, 'Aristrakh', 'Kaultsyn', false);
 
-INSERT INTO Users (id, firstName, lastName)
-VALUES ('2', 'Valeria', 'Shtolc');
+INSERT INTO Users (id, age, login, password, isDeleted)
+VALUES ('1', 18, 'Vasilisia', 'Prekrasanya', false);
 
-INSERT INTO Users (id, firstName, lastName)
-VALUES ('3', 'Daniil', 'Ssss');
+INSERT INTO Users (id, age, login, password, isDeleted)
+VALUES ('1', 18, 'Anastsasia', 'Shvarts', false);
