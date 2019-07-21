@@ -10,23 +10,23 @@ export class UserModel extends Sequelize.Model {
 
 export const initUserModel = (sequelize: Sequelize.Sequelize): typeof UserModel => {
     UserModel.init({
-        id: {
+        'id': {
             type: Sequelize.STRING,
             primaryKey: true,
         },
-        login: {
+        'login': {
             type: Sequelize.STRING,
             allowNull: false
         },
-        password: {
+        'password': {
             type: Sequelize.STRING,
             allowNull: false
         },
-        age: {
+        'age': {
             type: Sequelize.NUMBER,
             allowNull: false
         },
-        isDeleted: {
+        'isdeleted': {
             type: Sequelize.BOOLEAN,
             allowNull: false
         }

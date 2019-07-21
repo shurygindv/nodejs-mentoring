@@ -14,10 +14,11 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
+    "typeRoots" : ["./typings", "./node_modules/@types"],
     "paths": {
       "@libs/*": ["./libs/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "typings/**/*"],
   "exclude": ["node_modules"]
 }

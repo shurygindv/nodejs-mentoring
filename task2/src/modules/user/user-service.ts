@@ -1,5 +1,5 @@
 import {uuidHelper} from '@libs/uuid';
-import {Crypto} from "@libs/bcrypt";
+import {Crypto} from "@libs/crypt";
 
 import {BaseService} from '../../core/base-service';
 import {CreateUserDto} from "./dto/create-user.dto";
@@ -7,9 +7,10 @@ import {CreateUserDto} from "./dto/create-user.dto";
 import {MaybeNull} from '../../types';
 import {ServiceError} from "../../core/service-error";
 import {IUserRepository, UserEntity} from "./user-repository";
+import { UpdateUserDto } from './dto/update-user.dto';
 
 export interface IUser {
-    id: string,
+    id: string;
     login: string;
     age: number;
 }
@@ -18,6 +19,8 @@ export interface IUserService {
     create(user: CreateUserDto): Promise<IUser>;
 
     findAll(): Promise<IUser[]>;
+
+    update (id: string, payload: UpdateUserDto): Promise<string>;
 
     findById(id: string): Promise<MaybeNull<IUser>>;
 
@@ -54,6 +57,12 @@ export class UserService extends BaseService implements IUserService {
         return mapUserModelToService(created);
     }
 
+    public async update (id: string, payload: UpdateUserDto): Promise<string> {
+        const updatedId = await this.userRepo.updateUserById(id, payload);
+
+        return updatedId;
+    }
+
     public async findAll(): Promise<IUser[]> {
         const users = await this.userRepo.findAllUsers();
 
@@ -67,7 +76,7 @@ export class UserService extends BaseService implements IUserService {
     }
 
     public async deleteById (id: string): Promise<string | never> {
-        const userId = await this.userRepo.updateUserById(id, {isDeleted: true});
+        const userId = await this.userRepo.updateUserById(id, {'isdeleted': true});
 
         if (!userId) {
             new ServiceError('UserService: deletable user not found');

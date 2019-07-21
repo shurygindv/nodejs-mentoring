@@ -6,9 +6,9 @@ import {RepositoryError} from "../../core/repository-error";
 export interface IUserRepository {
     createUser(user: any): Promise<UserEntity | never>;
 
-    updateUserById (id: string, values: object): Promise<string>
+    updateUserById (id: string, values: object): Promise<string>;
 
-    findAllUsers(): Promise<UserEntity[] | never>
+    findAllUsers(): Promise<UserEntity[] | never>;
 
     findUserById(id: string): Promise<UserEntity | never>;
 }
@@ -19,7 +19,7 @@ export class UserEntity {
     public login: string;
     public password: string;
 
-    constructor(id: string, age: number, login: string, password: string) {
+    public constructor(id: string, age: number, login: string, password: string) {
         this.id = id;
         this.age = age;
         this.login = login;
@@ -43,15 +43,13 @@ export class UserRepository extends BaseRepository<UserEntity, UserModel> implem
 
     // todo: question #1
     public async createUser(user: any): Promise<UserEntity | never> {
-        let created = null;
-
         try {
-            let created = await this.create({
-                id: user.id,
-                age: user.age,
-                login: user.login,
-                password: user.password,
-                isDeleted: false,
+            const created = await this.create({
+                'id': user.id,
+                'age': user.age,
+                'login': user.login,
+                'password': user.password,
+                'isdeleted': false,
             });
 
             return asUserEntity(
@@ -76,7 +74,7 @@ export class UserRepository extends BaseRepository<UserEntity, UserModel> implem
         return this.findAll();
     }
 
-    async findUserById(id: string): Promise<UserEntity | never> {
+    public async findUserById(id: string): Promise<UserEntity | never> {
         const user = await this.findByPk(id);
 
         if (!user) {

@@ -1,34 +1,47 @@
-FROM node:12.6.0-alpine
+### production
+FROM node:12.6.0-alpine as production
+
+ENV NODE_ENV=production
 
 EXPOSE 7070
 
-# environment
-ARG NODE_ENV=production
-ENV NODE_ENV $NODE_ENV
-
-RUN apk --no-cache add --virtual native-deps \
-    g++ gcc libgcc libstdc++ linux-headers autoconf automake make nasm python git && \
-    npm install --quiet node-gyp -g
-
-
-# install yarn
-RUN npm install -g yarn
-
-# our work dir
+# client app dir
 WORKDIR /usr/src/app
 
-# copy only packages and install it
 COPY package.json yarn.lock ./
 
-RUN yarn install --frozen-lockfile --no-cache --production
-
-# copy restyy
+# install prod dependencies
+RUN yarn install --frozen-lockfile --no-cache --production 
 
 COPY . .
 
 RUN yarn build:prod
 
-# least privilege
-USER node
+ENTRYPOINT [ "docker-entrypoint.sh" ]
 
 CMD ["yarn", "start:prod"]
+
+### audit stage
+FROM production as audit
+
+WORKDIR /usr/audit/app
+# be main
+USER root
+# container audit
+RUN apk add --no-cache ca-certificates && update-ca-certificates && \
+    wget -O /microscanner https://get.aquasec.com/microscanner && \
+    chmod +x /microscanner && \
+    /microscanner Y2ZkNDE2NjU2ZGQ1 && \
+    rm -rf /microscanner
+
+CMD ["yarn", "audit", "--level", "critical"]
+
+### dev stage
+FROM production as development
+
+ENV NODE_ENV=development
+
+RUN yarn
+
+# a.k.a nodemon
+CMD ["yarn", "start:dev"]
