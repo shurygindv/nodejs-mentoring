@@ -8,7 +8,6 @@ import {registerRoutes} from "./routes";
 
 const application: express.Application = express();
 
-
 const registerDependencies = (app: express.Application): void => {
     app.use(cors());
     app.use(express.json());
@@ -17,7 +16,9 @@ const registerDependencies = (app: express.Application): void => {
 
 
 const startApplication = (app: express.Application): void => {
-    app.listen(7777, (): string => 'hola, amigos! on 7777 port')
+    const log = (): void => console.log('Started at 7777 port');
+
+    app.listen(7777, log);
 };
 
 
