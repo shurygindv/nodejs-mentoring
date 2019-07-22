@@ -12,3 +12,7 @@ export const bootstrap = (sequelize: Sequelize): Router[] => {
 
     return [userRouter];
 };
+
+
+// TODO: database provider!
+// TODO: investigate migrations!

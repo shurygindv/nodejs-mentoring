@@ -32,6 +32,7 @@ const asUserEntity = (id: string, age: number, login: string, password: string):
 
 export class UserRepository extends BaseRepository<UserEntity, UserModel> implements IUserRepository {
 
+    // todo: use helper 
     public mapUserModelToEntity(userModel: UserModel): UserEntity {
         return asUserEntity(
             userModel.id,

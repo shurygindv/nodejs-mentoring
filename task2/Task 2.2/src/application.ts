@@ -29,7 +29,6 @@ const routes = bootstrap(connection);
 registerAppDependencies(app);
 R.forEach(registerRoutes, routes);
 
-
 export {
     app
 };
