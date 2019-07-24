@@ -1,7 +1,4 @@
-import {app} from './application';
+import { app } from './application';
+import { config as cfg } from './core/config';
 
-
-
-// todo: port as env variable
-// https://stackoverflow.com/questions/37377731/extend-express-request-object-using-typescript
-app.listen(7070, () => console.log(`Started at 7070 port`));
+app.listen(cfg.serverPort, () => console.log(`Started at ${cfg.serverPort} port`));

@@ -1,4 +1,4 @@
-CREATE TABLE "Users" (
+CREATE TABLE Users (
   id VARCHAR(100) PRIMARY KEY,
   age INTEGER not null,
   login VARCHAR(100) not null,
