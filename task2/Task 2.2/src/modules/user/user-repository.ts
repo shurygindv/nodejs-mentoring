@@ -66,7 +66,7 @@ export class UserRepository extends BaseRepository<UserEntity, UserModel> implem
 
     // TODO: question #2
     public async updateUserById (id: string, values: object): Promise<string> {
-        const updated = await this.updateById(id, values);
+        await this.updateById(id, values);
 
         return id;
     }

@@ -63,6 +63,7 @@ export class BaseRepository<Entity, T extends Sequelize.Model> {
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public mapUserModelToEntity(item: T): Entity {
         throw new Error("Not implemented yet");
     }
