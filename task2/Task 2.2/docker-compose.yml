@@ -1,0 +1,29 @@
+version: "3.4"
+services:
+  nodejs-server:
+    build:
+      context: .
+      target: production
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 7070:7070
+      - 9229:9229
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - /home/app/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: pg-db-test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test1234
+    ports:
+      - 5432
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
