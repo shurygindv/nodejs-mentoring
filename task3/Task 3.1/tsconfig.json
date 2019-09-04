@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "commonjs",
+      "outDir": "dist",
+      "moduleResolution": "node",
+      "strict": true,
+      "strictPropertyInitialization": false,
+      "pretty": true,
+      "downlevelIteration": true,
+      "sourceMap": true,
+      "skipLibCheck": true,
+      "removeComments": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "allowSyntheticDefaultImports": true,
+      "typeRoots": ["./node_modules/@types", "./typings"],
+      "baseUrl": "./"
+    },
+    "exclude": ["node_modules", "dist"],
+	  "include": [
+		  "src/**/*",
+		  "./typings/**/*.d.ts"
+    ]
+  }
