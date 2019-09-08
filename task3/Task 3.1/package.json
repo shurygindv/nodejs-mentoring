@@ -6,7 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "nodemon"
+    "build:prod": "tsc",
+    "start:dev": "nodemon",
+    "start:prod": "node dist/server.js"
   },
   "dependencies": {
     "@types/cors": "^2.8.6",
@@ -15,7 +17,11 @@
     "@types/uuid": "^3.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "inversify": "^5.0.1",
+    "inversify-express-utils": "^6.3.2",
     "io-ts": "^2.0.1",
+    "pg": "^7.12.1",
+    "reflect-metadata": "^0.1.13",
     "typescript": "^3.6.2",
     "uuid": "^3.3.3"
   },
