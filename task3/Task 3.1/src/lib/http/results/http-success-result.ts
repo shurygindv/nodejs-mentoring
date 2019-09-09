@@ -1,4 +1,4 @@
-import { HttpResult } from '.';
+import { HttpResult } from '..';
 
 export default class HttpSuccessResult<T> extends HttpResult {
     private data: T;

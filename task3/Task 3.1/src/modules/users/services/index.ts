@@ -1,1 +1,0 @@
-export {default as UsersService, IUserService} from './users-service';

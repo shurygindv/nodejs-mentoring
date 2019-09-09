@@ -1,5 +1,5 @@
-import { HttpSuccessResult } from '.';
-import { HttpErrorResult } from '.';
+import { HttpSuccessResult } from '..';
+import { HttpErrorResult } from '..';
 
 export default abstract class HttpResult {
     public static success<T>(data: T): $APIHelpers.Response<T> {

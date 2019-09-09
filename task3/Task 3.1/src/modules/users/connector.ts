@@ -1,9 +1,9 @@
 
 import {interfaces} from 'inversify';
 
-import {UsersController} from './controllers';
-import {UsersService, IUserService} from './services';
-import {UsersRepository, IUsersRepository} from './repositories';
+import {UsersController} from './users-controller';
+import {UsersService, IUserService} from './users-service';
+import {UsersRepository, IUsersRepository} from './users-repository';
 
 const UserTypes = {
     UsersController: 'UsersController',

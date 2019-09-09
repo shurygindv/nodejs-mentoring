@@ -5,6 +5,10 @@ import {
 
 export declare global {
 
+    interface Enum {
+        [key: string]: string;
+    }
+
     export namespace App {
         export interface Request extends express.Request {};
         export interface Response extends express.Response {};
@@ -26,7 +30,7 @@ export declare global {
         type Nope = null;
     
         export interface Response<T = Nope> {
-            Data: MaybeNull<T>;
+            Data: MaybeNull<>;
             Success: true;
             ErrorDescription: Nope;
             ErrorCode: Nope;
@@ -39,7 +43,8 @@ export declare global {
         }
     }
     
-    export namespace $UtilityTypes {
+    export namespace $Utility {
+        export type Class<T, Args = any[]> = {new(...args: Args): T};
         export type MaybeNull<T> = T | Nope;
         export type MaybeUndefined<T> = T | undefined;
     }

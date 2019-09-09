@@ -1,6 +1,6 @@
 import { injectable, inject } from 'inversify';
 
-import { BaseRepository } from '../../../core/base-repository';
+import { BaseRepository } from '../../core/base-repository';
 
 export interface IUsersRepository {
     createUser(): any;
@@ -11,7 +11,7 @@ export interface IUsersRepository {
 }
 
 @injectable()
-export default class UsersRepository extends BaseRepository implements IUsersRepository {
+export class UsersRepository extends BaseRepository implements IUsersRepository {
     public createUser () {
         
     }

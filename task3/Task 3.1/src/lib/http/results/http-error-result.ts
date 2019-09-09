@@ -1,4 +1,4 @@
-import { HttpResult } from '.';
+import { HttpResult } from '..';
 
 export default class HttpErrorResult extends HttpResult {
     private errorCode: number;
