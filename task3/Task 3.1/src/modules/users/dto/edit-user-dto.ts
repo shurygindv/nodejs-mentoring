@@ -1,7 +1,7 @@
 import {MinLength, IsNotEmpty, IsNumber} from 'class-validator';
 
 
-export class EditUserDto {
+class EditUserDto {
     @MinLength(3)
     @IsNotEmpty()
     public login: string;
@@ -11,8 +11,13 @@ export class EditUserDto {
     public age: number;
 }
 
-export class EditPasswordUserDto {
+class EditPasswordUserDto {
     @MinLength(5)
     @IsNotEmpty()
     public password: string;
+}
+
+export {
+    EditPasswordUserDto,
+    EditUserDto,
 }
