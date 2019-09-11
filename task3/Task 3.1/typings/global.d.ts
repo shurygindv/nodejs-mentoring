@@ -1,7 +1,4 @@
 import * as express from 'express';
-import {
-    interfaces,
-} from 'inversify-express-utils';
 
 export declare global {
 
@@ -10,7 +7,10 @@ export declare global {
     }
 
     export namespace App {
-        export interface Request extends express.Request {};
+        export interface Request<B = {}> extends express.Request {
+            body: B
+        };
+        
         export interface Response extends express.Response {};
 
         export interface IController extends interfaces.Controller {};
@@ -26,7 +26,7 @@ export declare global {
     }
 
 
-    export namespace $APIHelpers {
+    export namespace Api {
         type Nope = null;
     
         export interface Response<T = Nope> {
@@ -43,7 +43,7 @@ export declare global {
         }
     }
     
-    export namespace $Utility {
+    export namespace TS {
         export type Class<T, Args = any[]> = {new(...args: Args): T};
         export type MaybeNull<T> = T | Nope;
         export type MaybeUndefined<T> = T | undefined;
