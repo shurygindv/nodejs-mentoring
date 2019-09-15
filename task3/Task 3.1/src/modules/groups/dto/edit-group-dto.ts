@@ -1,0 +1,20 @@
+import {MinLength, IsNotEmpty, IsNumber} from 'class-validator';
+
+import { IValidatable } from '../../../lib/validation/validatable';
+
+class EditUserDto implements IValidatable {
+    @MinLength(3)
+    @IsNotEmpty()
+    public login: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    public age: number;
+
+    @IsNotEmpty()
+    public confirmPassword: Guid_v4;
+}
+
+export {
+    EditUserDto,
+}
