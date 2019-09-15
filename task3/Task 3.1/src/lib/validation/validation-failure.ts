@@ -5,9 +5,9 @@ import {CustomError} from '../error/index';
 const VALIDATION_ERROR_NAME = 'ValidationError';
 
 export class ValidationFailure extends CustomError {
-    protected errors: ValidationError[];
+    protected errors: ValidationError[] | string;
     
-    public constructor (errors: ValidationError[]) {
+    public constructor (errors: ValidationError[] | string) {
         super();
 
         this.name = VALIDATION_ERROR_NAME;

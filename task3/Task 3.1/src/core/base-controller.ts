@@ -23,6 +23,12 @@ export class BaseController extends BaseHttpController {
         return this.json(result.data, result.statusCode);
     }
     
+    public failureStatus <T>(data: T, statusCode?: HttpStatusCode) {
+        const result = Status.Success<T>(false, data, statusCode);
+
+        return this.json(result.data, result.statusCode);
+    }
+
     public statusWithErrors (errorCode: string, errorMessage: string) {
         const result = Status.Error(errorCode, errorMessage);
 

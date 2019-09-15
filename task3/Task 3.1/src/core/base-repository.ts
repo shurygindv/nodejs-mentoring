@@ -1,4 +1,2 @@
 
-
-
-export class BaseRepository {}
+export class BaseRepository  {}

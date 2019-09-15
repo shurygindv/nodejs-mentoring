@@ -4,6 +4,7 @@ import { RegisterUserDto } from '../dto/register-user-dto';
 import { EditUserDto } from '../dto/edit-user-dto';
 // to =>
 import { UserModel } from '../models/user-model';
+import { UserDto } from '../dto/user-dto';
 
 export class UserDtoMapper extends BaseMapper {
     public fromRegisterDtoToUserModel (dto: RegisterUserDto): Promise<UserModel> {
@@ -22,6 +23,16 @@ export class UserDtoMapper extends BaseMapper {
             login: dto.login,
             password: dto.confirmPassword,
         });
+
+        return this.beLazy(model);
+    }
+
+    public fromUserModelToDTO (model: UserModel): Promise<UserDto> {
+        const dto: UserDto = {
+            id: model.id,
+            login: model.login,
+            age: model.age
+        }
 
         return this.beLazy(model);
     }

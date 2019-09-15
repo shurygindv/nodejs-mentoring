@@ -55,11 +55,15 @@ export class UsersController extends BaseController implements App.IController {
 
         const outputModel = await this.userService.createUser(model);
 
-        return this.successStatus(outputModel);
+        const userDto = this.userMapper.fromUserModelToDTO(outputModel);
+
+        return this.successStatus(userDto);
     }
 
     @httpPut('/:id/edit')
     public async editUserById(req: App.Request<EditUserDto>, res: App.Response) {
+        const id: Guid_v4 = req.params.id;
+
         const [dtoResult, validationResult] = await this.validateAsync(
             EditUserDto,
             req.body
@@ -71,9 +75,14 @@ export class UsersController extends BaseController implements App.IController {
 
         const model: UserModel = await this.userMapper.fromEditDtoToUserModel(dtoResult.data);
 
-        const outputModel: UserModel = await this.userService.editUserById(model);
+        const outputModel: UserModel = await this.userService.editUserById(
+            id, 
+            model
+        );
 
-        return this.successStatus(outputModel);
+        const userDto = this.userMapper.fromUserModelToDTO(outputModel);
+
+        return this.successStatus(userDto);
     }
 
     @httpGet('/:id/delete')
@@ -87,6 +96,17 @@ export class UsersController extends BaseController implements App.IController {
 
         if (validationResult.hasErrors()) {
             return this.statusWithValidationErrors(validationResult.result);
+        }
+
+        try {
+            const userModel: UserModel = await this.userService.deleteUserById(id);
+
+            const userDto = this.userMapper.fromUserModelToDTO(userModel);
+
+            return this.successStatus(userDto);
+
+        } catch (e) {
+            return this.failureStatus(e.message)
         }
     }
 }

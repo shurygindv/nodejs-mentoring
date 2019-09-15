@@ -6,7 +6,7 @@ import * as cors from 'cors';
 import { Container } from 'inversify';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
-import { bootstrap } from './modules/bootstrapper';
+import { bootstrap } from './bootstrapper';
 import { envConfig } from './config/environment';
 
 const moduleContainer = new Container();

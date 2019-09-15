@@ -8,22 +8,23 @@ import { IUsersRepository } from './users-repository';
 
 import { UserModel } from './models/user-model';
 import { CreateUserServiceError } from './errors/create-user-service-error';
-import { UserModelMapper } from './mapping/user-model-mapper';
+import { UserModelDboMapper } from './mapping/user-modeldbo-mapper';
+import { NotFoundUserError } from './errors/not-found-user-error';
 
 export interface IUserService {
-    createUser(userModel: UserModel): Promise<Guid_v4>;
-    getUserById(): any;
-    getAllUsers(): any;
-    editUserById(userModel: UserModel): Promise<Guid_v4>;
-    deleteUserById(): any;
+    createUser(userModel: UserModel): Promise<UserModel>;
+    getUserById(id: string): Promise<TS.MaybeNull<UserModel>>;
+    getAllUsers(): Promise<UserModel[]>;
+    editUserById(id: Guid_v4, userModel: UserModel): Promise<UserModel>;
+    deleteUserById(id: Guid_v4): Promise<UserModel>;
 }
 
 @injectable()
 export class UsersService extends BaseService implements IUserService {
     @inject(UserTypes.UsersRepository) private userRepository: IUsersRepository;
-    @inject(UserTypes.UserModelMapper) private userMapper: UserModelMapper;
+    @inject(UserTypes.UserDboMapper) private userMapper: UserModelDboMapper;
 
-    public async createUser(userModel: UserModel): Promise<Guid_v4> {
+    public async createUser(userModel: UserModel): Promise<UserModel> {
         const validationResult = await this.validateAsync(userModel);
 
         if (validationResult.hasErrors) {
@@ -31,26 +32,45 @@ export class UsersService extends BaseService implements IUserService {
         }
 
         const id = await Random.guidAsync();
-        const userEntity = await this.userMapper.fromModelToUserEntity(id, userModel);
 
-        const outputUserEntity = await this.userRepository.createUser(userEntity)
+        const outputUserDbo = await this.userRepository.createUser(
+            id, 
+            userModel
+        );
     
-        return id;
+        return await this.userMapper.fromDboToUserModel(outputUserDbo);
     }
 
-    public getUserById() {
-        throw new Error("Method not implemented.");
+    public async getUserById (id: Guid_v4): Promise<TS.MaybeNull<UserModel>> {
+        const outputUserDbo = await this.userRepository.getById(id);
+    
+        return await this.userMapper.fromDboToUserModel(outputUserDbo)
     }
 
-    public getAllUsers() {
-        throw new Error("Method not implemented.");
+    public async getAllUsers(): Promise<UserModel[]> {
+        const outputUserDbo = await this.userRepository.getAll();
+    
+        return await this.userMapper.fromDboToUserModelArray(outputUserDbo)
     }
 
-    public editUserById(userModel: UserModel): void {
-        throw new Error("Method not implemented.");
+    public async editUserById(id: Guid_v4, userModel: UserModel): Promise<UserModel> {
+        const outputUserDbo = await this.userRepository.updateById(
+            id,
+            userModel
+        );
+    
+        return await this.userMapper.fromDboToUserModel(outputUserDbo)
     }
 
-    public deleteUserById() {
-        throw new Error("Method not implemented.");
+    public async deleteUserById(id: Guid_v4): Promise<UserModel> {
+        const existing = this.getUserById(id);
+
+        if (!existing) {
+            throw new NotFoundUserError('User Not Found')
+        }
+
+        await this.userRepository.deleteById(id);
+      
+        return existing;
     }
 }

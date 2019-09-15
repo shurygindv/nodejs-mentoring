@@ -3,6 +3,10 @@ import { plainToClass } from 'class-transformer';
 
 export default class BaseMapper {
 
+    protected empty (): Promise<null> {
+        return this.beLazy(null);
+    }
+
     protected createInstance <T>(
         model: TS.Class<T>, plain: T
    ): T {
