@@ -80,7 +80,7 @@ export class UsersController extends BaseController implements App.IController {
     public async deleteById(
         @requestParam('id') id: string,
         @response() res: App.Response
-    ):Promise<JsonResult<any>> { 
+    ): Promise<any> { 
         const [dto, validationResult] = await this.validateAsync<DeleteUserDto>(DeleteUserDto, {
             guid: id,
         });
@@ -88,6 +88,5 @@ export class UsersController extends BaseController implements App.IController {
         if (validationResult.hasErrors()) {
             return this.statusWithValidationErrors(validationResult.result);
         }
-
     }
 }
