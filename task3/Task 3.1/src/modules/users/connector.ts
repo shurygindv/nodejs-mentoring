@@ -8,7 +8,7 @@ import {UsersRepository, IUsersRepository} from './users-repository';
 import { UserDtoMapper } from './mapping/user-dto-mapper';
 import { UserModelDboMapper } from './mapping/user-modeldbo-mapper';
 
-const UserTypes = {
+const userTypes = {
     UserDtoMapper: 'UserDtoMapper',
     UserDboMapper: 'UserDboMapper',
 
@@ -18,23 +18,23 @@ const UserTypes = {
 }
 
 const connectUsersModule = (container: interfaces.Container): void => {
-    container.bind<UserDtoMapper>(UserTypes.UserDtoMapper)
+    container.bind<UserDtoMapper>(userTypes.UserDtoMapper)
     .to(UserDtoMapper);
 
-    container.bind<UserModelDboMapper>(UserTypes.UserDboMapper)
+    container.bind<UserModelDboMapper>(userTypes.UserDboMapper)
     .to(UserModelDboMapper);
 
-    container.bind<UsersController>(UserTypes.UsersController)
+    container.bind<UsersController>(userTypes.UsersController)
         .to(UsersController);
 
-    container.bind<UsersService>(UserTypes.UsersService)
+    container.bind<UsersService>(userTypes.UsersService)
         .to(UsersService);
 
-    container.bind<UsersRepository>(UserTypes.UsersRepository)
+    container.bind<UsersRepository>(userTypes.UsersRepository)
         .to(UsersRepository);
 }
 
 export {
-    UserTypes, 
+    userTypes, 
     connectUsersModule,  
 }

@@ -2,58 +2,62 @@ import { injectable, inject } from 'inversify';
 import _ from 'lodash';
 
 import { BaseRepository } from '../../core/base-repository';
-import { dbTypes } from '../../providers/sequelize/dbTypes';
 
-import { UserDboModel } from '../../providers/sequelize/models/user-factory';
-import { UserModel } from './models/group-model';
+import { dbTypes } from '../../providers/sequelize/dbTypes';
+import { GroupDboModel } from '../../providers/sequelize/models/group-factory';
+
+import { GroupModel } from './models/group-model';
 import { GroupModelDboMapper } from './mapping/group-modeldbo-mapper';
+import { groupTypes } from './connector';
 
 export interface IGroupsRepository {
-    createGroup(id: Guid_v4, userModel: UserModel): Promise<UserDboModel>;
-    getById(id: Guid_v4): Promise<TS.MaybeNull<UserDboModel>>
-    getAll(): Promise<UserDboModel[]>;
-    updateById(id: Guid_v4, model: UserModel): Promise<TS.MaybeNull<UserDboModel>>
+    createGroup(id: Guid_v4, groupModel: GroupModel): Promise<GroupDboModel>;
+    getById(id: Guid_v4): Promise<TS.MaybeNull<GroupDboModel>>
+    getAll(): Promise<GroupDboModel[]>;
+    updateById(id: Guid_v4, model: GroupModel): Promise<TS.MaybeNull<GroupDboModel>>
     deleteById(id: Guid_v4): Promise<number>
 }
 
 @injectable()
 export class GroupsRepository extends BaseRepository implements IGroupsRepository {
-    @inject(dbTypes.UserModel) userRepo: typeof UserDboModel; // remake
-    @inject(dbTypes.UserModel) mapper: GroupModelDboMapper;
+    @inject(dbTypes.GroupModel) groupRepo: typeof GroupDboModel; // remake
+    @inject(groupTypes.GroupDboMapper) mapper: GroupModelDboMapper;
 
     public async createGroup(
         id: Guid_v4, 
-        userModel: UserModel
-    ): Promise<UserDboModel> {
-        const created = await this.userRepo.create({
+        groupModel: GroupModel
+    ): Promise<GroupDboModel> {
+        const created = await this.groupRepo.create({
             id: id,
-            login: userModel.login,
-            password: userModel.password,
-            age: userModel.age,
+            name: groupModel.name,
+            permissions: groupModel.permissions
         });
 
        return created;
     }    
     
     
-    public async getById (id: Guid_v4): Promise<TS.MaybeNull<UserDboModel>> {
-        const created = await this.userRepo.findByPk(id);
+    public async getById (id: Guid_v4): Promise<TS.MaybeNull<GroupDboModel>> {
+        const created = await this.groupRepo.findByPk(id);
 
        return created;
     }
     
-    public async getAll (): Promise<UserDboModel[]> {
-        return await this.userRepo.findAll();
+    public async getAll (): Promise<GroupDboModel[]> {
+        return await this.groupRepo.findAll();
     }
     
-    public async updateById(id: Guid_v4, model: UserModel): Promise<TS.MaybeNull<UserDboModel>> {
-        const [affectedRow, dboModel] = await this.userRepo.update(model, { where: { id } });
+    public async updateById(
+        id: Guid_v4, 
+        model: GroupModel
+    ): Promise<TS.MaybeNull<GroupDboModel>> {
+        const [affectedRow, dboModel] = await this.groupRepo.update(model, { where: { id } });
 
         return _.first(dboModel) || null;
     }
     
     public async deleteById(id: Guid_v4): Promise<number> {
-       const affectedRow = await this.userRepo.destroy({where: {id}});
+       const affectedRow = await this.groupRepo.destroy({where: {id}});
     
        return affectedRow;
     }

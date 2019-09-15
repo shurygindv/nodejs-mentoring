@@ -1,7 +1,7 @@
+import { GROUP_PERMISSION } from '../../../providers/sequelize/models/group-factory';
 
-export class UserModel {
+export class GroupModel {
     public id?: Guid_v4;
-    public login: string;
-    public password: string;
-    public age: number;
+    public name: string;
+    public permissions: GROUP_PERMISSION;
 }

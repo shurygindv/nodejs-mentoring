@@ -1,39 +1,37 @@
 import { BaseMapper } from '../../../lib/mapping';
 
-import { RegisterUserDto } from '../dto/register-group-dto';
-import { EditUserDto } from '../dto/edit-group-dto';
+import { CreateGroupDto } from '../dto/create-group-dto';
+import { EditGroupDto } from '../dto/edit-group-dto';
 // to =>
-import { UserModel } from '../models/group-model';
-import { UserDto } from '../dto/group-dto';
+import { GroupModel } from '../models/group-model';
+import { GroupDto } from '../dto/group-dto';
 
 export class GroupDtoMapper extends BaseMapper {
-    public fromRegisterDtoToUserModel (dto: RegisterUserDto): Promise<UserModel> {
-        const model: UserModel = this.createInstance<UserModel>(UserModel, {
-            age: dto.age,
-            login: dto.login,
-            password: dto.password,
+    public fromCreateDtoToGroupModel (dto: CreateGroupDto): Promise<GroupModel> {
+        const model: GroupModel = this.createInstance<GroupModel>(GroupModel, {
+            name: dto.name,
+            permissions: dto.permissions,
         });
 
         return this.beLazy(model);
     }
 
-    public fromEditDtoToUserModel (dto: EditUserDto): Promise<UserModel> {
-        const model: UserModel = this.createInstance<UserModel>(UserModel, {
-            age: dto.age,
-            login: dto.login,
-            password: dto.confirmPassword,
+    public fromEditDtoToGroupModel (dto: EditGroupDto): Promise<GroupModel> {
+        const model: GroupModel = this.createInstance<GroupModel>(GroupModel, {
+            name: dto.name,
+            permissions: dto.permissions,
         });
 
         return this.beLazy(model);
     }
 
-    public fromUserModelToDTO (model: UserModel): Promise<UserDto> {
-        const dto: UserDto = {
+    public fromGroupModelToDTO (model: GroupModel): Promise<GroupDto> {
+        const dto: GroupDto = {
             id: model.id,
-            login: model.login,
-            age: model.age
+            name: model.name,
+            permissions: model.permissions,
         }
 
-        return this.beLazy(model);
+        return this.beLazy(dto);
     }
 }

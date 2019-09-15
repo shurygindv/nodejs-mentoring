@@ -11,20 +11,20 @@ import { inject } from 'inversify';
 
 import { BaseController } from '../../core/base-controller';
 import { IGroupsService } from './groups-service';
-import { GroupTypes } from './connector';
+import { groupTypes } from './connector';
 
 import { GroupDtoMapper } from './mapping/group-dto-mapper';
 
-import { RegisterUserDto } from './dto/register-group-dto';
-import { DeleteUserDto } from './dto/delete-group-dto';
-import { EditUserDto } from './dto/edit-group-dto';
+import { CreateGroupDto } from './dto/create-group-dto';
+import { DeleteGroupDto } from './dto/delete-group-dto';
+import { EditGroupDto } from './dto/edit-group-dto';
 
-import { UserModel } from './models/group-model';
+import { GroupModel } from './models/group-model';
 
 @controller('/groups')
 export class GroupsController extends BaseController implements App.IController {
-    @inject(GroupTypes.GroupsService) private groupService: IGroupsService;
-    @inject(GroupTypes.GroupDtoMapper) private groupMapper: GroupDtoMapper;
+    @inject(groupTypes.GroupsService) private groupService: IGroupsService;
+    @inject(groupTypes.GroupDtoMapper) private groupMapper: GroupDtoMapper;
 
     // TODO: pagination
     @httpGet('/')
@@ -32,18 +32,18 @@ export class GroupsController extends BaseController implements App.IController 
         req: App.Request,
         res: App.Response
     ): Promise<JsonResult<[]>> {
-        const users = await this.groupService.getAllGroups();
+        const groups = await this.groupService.getAllGroups();
 
-        return this.successStatus(users);
+        return this.successStatus(groups);
     }
 
     @httpPost('/create')
-    public async createUser(
-        req: App.Request<RegisterUserDto>,
+    public async createGroup(
+        req: App.Request<CreateGroupDto>,
         res: App.Response
     ) {
         const [dtoResult, validationResult] = await this.validateAsync(
-            RegisterUserDto,
+            CreateGroupDto,
             req.body
         );
 
@@ -51,21 +51,21 @@ export class GroupsController extends BaseController implements App.IController 
             return this.statusWithValidationErrors(validationResult.result);
         }
 
-        const model: UserModel = await this.groupMapper.fromRegisterDtoToUserModel(dtoResult.data);
+        const model: GroupModel = await this.groupMapper.fromCreateDtoToGroupModel(dtoResult.data);
 
         const outputModel = await this.groupService.createGroup(model);
 
-        const userDto = this.groupMapper.fromUserModelToDTO(outputModel);
+        const groupDto = this.groupMapper.fromGroupModelToDTO(outputModel);
 
-        return this.successStatus(userDto);
+        return this.successStatus(groupDto);
     }
 
     @httpPut('/:id/edit')
-    public async editUserById(req: App.Request<EditUserDto>, res: App.Response) {
+    public async editGroupById(req: App.Request<EditGroupDto>, res: App.Response) {
         const id: Guid_v4 = req.params.id;
 
         const [dtoResult, validationResult] = await this.validateAsync(
-            EditUserDto,
+            EditGroupDto,
             req.body
         );
 
@@ -73,37 +73,37 @@ export class GroupsController extends BaseController implements App.IController 
             return this.statusWithValidationErrors(validationResult.result);
         }
 
-        const model: UserModel = await this.groupMapper.fromEditDtoToUserModel(dtoResult.data);
+        const model: GroupModel = await this.groupMapper.fromEditDtoToGroupModel(dtoResult.data);
 
-        const outputModel: UserModel = await this.groupService.editGroupById(
+        const outputModel: GroupModel = await this.groupService.editGroupById(
             id, 
             model
         );
 
-        const userDto = this.groupMapper.fromUserModelToDTO(outputModel);
+        const groupDto = this.groupMapper.fromGroupModelToDTO(outputModel);
 
-        return this.successStatus(userDto);
+        return this.successStatus(groupDto);
     }
 
     @httpGet('/:id/delete')
     public async deleteById(
         @requestParam('id') id: string,
-        @response() res: App.Response
     ): Promise<any> { 
-        const [dto, validationResult] = await this.validateAsync<DeleteUserDto>(DeleteUserDto, {
-            guid: id,
-        });
+        const [, validationResult] = await this.validateAsync<DeleteGroupDto>(
+            DeleteGroupDto, 
+            {guid: id}
+        );
 
         if (validationResult.hasErrors()) {
             return this.statusWithValidationErrors(validationResult.result);
         }
 
         try {
-            const userModel: UserModel = await this.groupService.deleteGroupById(id);
+            const groupModel: GroupModel = await this.groupService.deleteGroupById(id);
 
-            const userDto = this.groupMapper.fromUserModelToDTO(userModel);
+            const groupDto = this.groupMapper.fromGroupModelToDTO(groupModel);
 
-            return this.successStatus(userDto);
+            return this.successStatus(groupDto);
 
         } catch (e) {
             return this.failureStatus(e.message)

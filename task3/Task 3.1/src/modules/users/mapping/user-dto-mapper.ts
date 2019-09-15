@@ -34,6 +34,6 @@ export class UserDtoMapper extends BaseMapper {
             age: model.age
         }
 
-        return this.beLazy(model);
+        return this.beLazy(dto);
     }
 }

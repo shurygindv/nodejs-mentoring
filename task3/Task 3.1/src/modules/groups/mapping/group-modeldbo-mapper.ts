@@ -1,29 +1,28 @@
 import {BaseMapper} from '../../../lib/mapping';
 
-import { UserDboModel } from '../../../providers/sequelize/models/user-factory';
+import { GroupDboModel } from '../../../providers/sequelize/models/group-factory';
 // to =>
-import { UserModel } from '../models/group-model';
+import { GroupModel } from '../models/group-model';
 
 export class GroupModelDboMapper extends BaseMapper {
-    public fromDboToUserModel (model: UserDboModel): Promise<TS.MaybeNull<UserModel>> {
+    public fromDboToGroupModel (model: GroupDboModel): Promise<TS.MaybeNull<GroupModel>> {
 
         if (!model) {
             return this.empty();
         }
 
-        const userModel: UserModel = this.createInstance<UserModel>(UserModel, {
+        const userModel: GroupModel = this.createInstance<GroupModel>(GroupModel, {
             id: model.id,
-            age: model.age,
-            login: model.login,
-            password: model.password,
+            name: model.name,
+            permissions: model.permissions,
         });
 
         return this.beLazy(userModel);
     }
 
-    public async fromDboToUserModelArray (models: UserDboModel[]): Promise<UserModel[]> {
+    public async fromDboToGroupModelArray (models: GroupDboModel[]): Promise<GroupModel[]> {
         const results = (models || []).map(
-            async (dboModel: UserDboModel) => await this.fromDboToUserModel(dboModel)
+            async (dboModel: GroupDboModel) => await this.fromDboToGroupModel(dboModel)
         );
 
         return await Promise.all(results);

@@ -11,7 +11,7 @@ import { inject } from 'inversify';
 
 import { BaseController } from '../../core/base-controller';
 import { IUserService } from './users-service';
-import { UserTypes } from './connector';
+import { userTypes } from './connector';
 
 import { UserDtoMapper } from './mapping/user-dto-mapper';
 
@@ -23,8 +23,8 @@ import { UserModel } from './models/user-model';
 
 @controller('/users')
 export class UsersController extends BaseController implements App.IController {
-    @inject(UserTypes.UsersService) private userService: IUserService;
-    @inject(UserTypes.UserDtoMapper) private userMapper: UserDtoMapper;
+    @inject(userTypes.UsersService) private userService: IUserService;
+    @inject(userTypes.UserDtoMapper) private userMapper: UserDtoMapper;
 
     // TODO: pagination
     @httpGet('/')

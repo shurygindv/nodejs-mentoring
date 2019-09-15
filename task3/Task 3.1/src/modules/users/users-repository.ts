@@ -1,12 +1,14 @@
-import { injectable, inject } from 'inversify';
 import _ from 'lodash';
+import { injectable, inject } from 'inversify';
 
 import { BaseRepository } from '../../core/base-repository';
-import { dbTypes } from '../../providers/sequelize/dbTypes';
 
+import { dbTypes } from '../../providers/sequelize/dbTypes';
 import { UserDboModel } from './../../providers/sequelize/models/user-factory';
+
 import { UserModel } from './models/user-model';
 import { UserModelDboMapper } from './mapping/user-modeldbo-mapper';
+import { userTypes } from './connector';
 
 export interface IUsersRepository {
     createUser(id: Guid_v4, userModel: UserModel): Promise<UserDboModel>;
@@ -19,7 +21,7 @@ export interface IUsersRepository {
 @injectable()
 export class UsersRepository extends BaseRepository implements IUsersRepository {
     @inject(dbTypes.UserModel) userRepo: typeof UserDboModel; // remake
-    @inject(dbTypes.UserModel) mapper: UserModelDboMapper;
+    @inject(userTypes.UserDboMapper) mapper: UserModelDboMapper;
 
     public async createUser(
         id: Guid_v4, 
