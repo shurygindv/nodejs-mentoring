@@ -1,4 +1,5 @@
 import { HttpStatusCode } from './http-status-code';
+import { ValidationError } from 'class-validator';
 
 class HttpResult<R> {
     public statusCode: HttpStatusCode;
@@ -24,7 +25,7 @@ class HttpSuccessResult<T> extends HttpResult<HttpSuccessData<T>> {}
 type HttpFailureData = {
     errorCode?: string;
     errorMessage?: string;
-    validationErrors?: string | Record<string, string>;
+    validationErrors?: ValidationError[] | Record<string, string>;
 };
 
 class HttpFailureResult extends HttpResult<HttpFailureData> {}

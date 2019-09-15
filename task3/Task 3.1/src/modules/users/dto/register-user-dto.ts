@@ -1,6 +1,8 @@
 import {MinLength, IsNotEmpty, IsNumber} from 'class-validator';
 
-class RegisterUserDto {
+import { IValidatable } from '../../../lib/validation/validatable';
+
+class RegisterUserDto implements IValidatable {
     @MinLength(3)
     @IsNotEmpty()
     public login: string;

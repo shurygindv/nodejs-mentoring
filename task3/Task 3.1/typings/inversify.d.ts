@@ -6,8 +6,9 @@ export declare module 'inversify-express-utils/dts/results' {
     export class JsonResult<T> implements interfaces.IHttpActionResult {
         readonly json: T;
         readonly statusCode: number;
-        private apiController;
+
         constructor(json: T, statusCode: number, apiController: BaseHttpController);
+        
         executeAsync(): Promise<HttpResponseMessage>;
     }
 }

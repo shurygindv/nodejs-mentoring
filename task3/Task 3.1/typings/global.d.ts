@@ -1,10 +1,13 @@
 import * as express from 'express';
+import { v4String } from 'uuid/interfaces';
 
 export declare global {
 
     interface Enum {
         [key: string]: string;
     }
+
+    type Guid_v4 = string; //v4String;
 
     export namespace App {
         export interface Request<B = {}> extends express.Request {

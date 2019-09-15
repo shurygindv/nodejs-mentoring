@@ -1,5 +1,6 @@
 import { HttpStatusCode } from "./http-status-code";
 import { HttpResult, HttpSuccessResult, HttpFailureResult } from './http-result';
+import { ValidationError } from 'class-validator';
 
 export class Status {
 
@@ -28,7 +29,7 @@ export class Status {
     }
 
     public static ValidationError (
-        validationErrors: string | Record<string, string>,
+        validationErrors: ValidationError[] | Record<string, string>,
         statusCode: HttpStatusCode = HttpStatusCode.BadRequest
     ) {
         return new HttpFailureResult(statusCode, {validationErrors});
