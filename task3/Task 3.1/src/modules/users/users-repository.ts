@@ -13,7 +13,25 @@ export interface IUsersRepository {
 
 @injectable()
 export class UsersRepository extends BaseRepository implements IUsersRepository {
-    public createUser (userEntity: UserEntity): Promise<UserEntity> {
-        throw new Error();
+    public createUser(userEntity: UserEntity): Promise<UserEntity> {
+        throw new Error("Method not implemented.");
+    }    
+    
+    
+    public getById() {
+        throw new Error("Method not implemented.");
     }
+    
+    public getAll() {
+        throw new Error("Method not implemented.");
+    }
+    
+    public updateById(): void {
+        throw new Error("Method not implemented.");
+    }
+    
+    public deleteById() {
+        throw new Error("Method not implemented.");
+    }
+
 }

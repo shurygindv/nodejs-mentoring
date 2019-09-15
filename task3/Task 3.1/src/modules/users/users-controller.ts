@@ -13,9 +13,12 @@ import { BaseController } from '../../core/base-controller';
 import { IUserService } from './users-service';
 import { UserTypes } from './connector';
 
-import { RegisterUserDto } from './dto/register-user-dto';
-import { EditUserDto } from './dto/edit-user-dto';
 import { UserDtoMapper } from './mapping/user-dto-mapper';
+
+import { RegisterUserDto } from './dto/register-user-dto';
+import { DeleteUserDto } from './dto/delete-user-dto';
+import { EditUserDto } from './dto/edit-user-dto';
+
 import { UserModel } from './models/user-model';
 
 @controller('/users')
@@ -44,7 +47,7 @@ export class UsersController extends BaseController implements App.IController {
             req.body
         );
 
-        if (validationResult.hasErrors) {
+        if (validationResult.hasErrors()) {
             return this.statusWithValidationErrors(validationResult.result);
         }
 
@@ -62,7 +65,7 @@ export class UsersController extends BaseController implements App.IController {
             req.body
         );
 
-        if (validationResult.hasErrors) {
+        if (validationResult.hasErrors()) {
             return this.statusWithValidationErrors(validationResult.result);
         }
 
@@ -74,10 +77,17 @@ export class UsersController extends BaseController implements App.IController {
     }
 
     @httpGet('/:id/delete')
-    public deleteById(
+    public async deleteById(
         @requestParam('id') id: string,
         @response() res: App.Response
-    ) { 
+    ):Promise<JsonResult<any>> { 
+        const [dto, validationResult] = await this.validateAsync<DeleteUserDto>(DeleteUserDto, {
+            guid: id,
+        });
+
+        if (validationResult.hasErrors()) {
+            return this.statusWithValidationErrors(validationResult.result);
+        }
 
     }
 }
