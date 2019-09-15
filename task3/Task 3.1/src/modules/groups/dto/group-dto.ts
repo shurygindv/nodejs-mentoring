@@ -1,11 +1,7 @@
-import { GROUP_PERMISSION } from '../../../providers/sequelize/models/group-factory';
+import { GroupPermission } from '../../../providers/sequelize/models/group-factory';
 
-class GroupDto {
-    public id?: Guid_v4;
+export class GroupDto {
+    public id: Guid_v4;
     public name: string;
-    public permissions: GROUP_PERMISSION;
-}
-
-export {
-    GroupDto
+    public permissions: GroupPermission;
 }

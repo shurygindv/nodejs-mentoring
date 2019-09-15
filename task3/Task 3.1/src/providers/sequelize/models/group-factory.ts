@@ -3,7 +3,7 @@ import * as sequelize from 'sequelize';
 
 import { SequelizeTypes } from '../local-sequelize';
 
-export enum GROUP_PERMISSION {
+export enum GroupPermission {
     READ = "Read",
     WRITE = "Write",
     DELETE = "DELETE",
@@ -14,7 +14,7 @@ export enum GROUP_PERMISSION {
 class GroupDboModel extends sequelize.Model {
     public id: Guid_v4;
     public name: string;
-    public permissions: GROUP_PERMISSION;
+    public permissions: GroupPermission;
 };
 
 const GroupFactory = (
@@ -32,11 +32,11 @@ const GroupFactory = (
         },
         'permissions': {
             type: SequelizeTypes.ENUM(
-                GROUP_PERMISSION.READ,
-                GROUP_PERMISSION.WRITE,
-                GROUP_PERMISSION.SHARE,
-                GROUP_PERMISSION.DELETE,
-                GROUP_PERMISSION.UPLOAD_FILES,
+                GroupPermission.READ,
+                GroupPermission.WRITE,
+                GroupPermission.SHARE,
+                GroupPermission.DELETE,
+                GroupPermission.UPLOAD_FILES,
              ),
             allowNull: false
         },

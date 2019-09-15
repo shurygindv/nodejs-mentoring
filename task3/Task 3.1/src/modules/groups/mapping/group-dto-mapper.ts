@@ -27,7 +27,7 @@ export class GroupDtoMapper extends BaseMapper {
 
     public fromGroupModelToDTO (model: GroupModel): Promise<GroupDto> {
         const dto: GroupDto = {
-            id: model.id,
+            id: model.id as Guid_v4,
             name: model.name,
             permissions: model.permissions,
         }

@@ -29,7 +29,7 @@ export class UserDtoMapper extends BaseMapper {
 
     public fromUserModelToDTO (model: UserModel): Promise<UserDto> {
         const dto: UserDto = {
-            id: model.id,
+            id: model.id as Guid_v4,
             login: model.login,
             age: model.age
         }
