@@ -1,6 +1,7 @@
+import { ValidationError } from 'class-validator';
+
 import { HttpStatusCode } from "./http-status-code";
 import { HttpResult, HttpSuccessResult, HttpFailureResult } from './http-result';
-import { ValidationError } from 'class-validator';
 
 export class Status {
 
@@ -21,7 +22,7 @@ export class Status {
     }
 
     public static Error (
-        errorCode: number,
+        errorCode: string | number,
         errorMessage: string,
         statusCode: HttpStatusCode = HttpStatusCode.BadRequest
     ) {

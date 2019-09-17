@@ -23,6 +23,7 @@ import { LoginUserDTO } from './dto/login-user-dto';
 import { UserModel } from './models/user-model';
 import { providerTokens } from '../../providers/tokens';
 import { AuthProvider } from '../../providers/authorization/auth-provider';
+import { AuthModel } from '../../providers/authorization/auth-model';
 
 const using = {
     userService: userTokens.usersService,
@@ -53,9 +54,21 @@ export class UsersController extends BaseController implements App.IController {
     public async login(
         @requestBody() requestBody: LoginUserDTO,
     ): Promise<JsonResult<[]>> {
-        const users = await this.userService.getAllUsers();
+        const [{data}, validationResult] = await this.validateAsync(
+            LoginUserDTO,
+            requestBody
+        );
 
-        return this.successStatus(users);
+        if (validationResult.hasErrors()) {
+            return this.statusWithValidationErrors(validationResult.result);
+        }
+
+        const auth: AuthModel = await this.authProvider.login(
+            data.login,
+            data.password
+        );
+
+        return this.successStatus(auth);
     }
 
     @httpPost('/create')
