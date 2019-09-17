@@ -2,7 +2,7 @@ import {
     httpGet,
     httpPost,
     httpPut,
-    response,
+    requestBody,
     controller,
     requestParam
 } from 'inversify-express-utils';
@@ -11,7 +11,7 @@ import { inject } from 'inversify';
 
 import { BaseController } from '../../core/base-controller';
 import { IGroupsService } from './groups-service';
-import { groupTypes } from './connector';
+import { groupTokens } from './tokens';
 
 import { GroupDtoMapper } from './mapping/group-dto-mapper';
 
@@ -23,8 +23,8 @@ import { GroupModel } from './models/group-model';
 
 @controller('/groups')
 export class GroupsController extends BaseController implements App.IController {
-    @inject(groupTypes.GroupsService) private groupService: IGroupsService;
-    @inject(groupTypes.GroupDtoMapper) private groupMapper: GroupDtoMapper;
+    @inject(groupTokens.GroupsService) private groupService: IGroupsService;
+    @inject(groupTokens.GroupDtoMapper) private groupMapper: GroupDtoMapper;
 
     // TODO: pagination
     @httpGet('/')
@@ -39,12 +39,11 @@ export class GroupsController extends BaseController implements App.IController 
 
     @httpPost('/create')
     public async createGroup(
-        req: App.Request<CreateGroupDto>,
-        res: App.Response
+        @requestBody() groupDtoBody: CreateGroupDto,
     ) {
         const [dtoResult, validationResult] = await this.validateAsync(
             CreateGroupDto,
-            req.body
+            groupDtoBody
         );
 
         if (validationResult.hasErrors()) {
@@ -53,20 +52,25 @@ export class GroupsController extends BaseController implements App.IController 
 
         const model: GroupModel = await this.groupMapper.fromCreateDtoToGroupModel(dtoResult.data);
 
-        const outputModel = await this.groupService.createGroup(model);
+        try {
+            const outputModel = await this.groupService.createGroup(model);
 
-        const groupDto = this.groupMapper.fromGroupModelToDTO(outputModel);
-
-        return this.successStatus(groupDto);
+            const groupDto = this.groupMapper.fromGroupModelToDTO(outputModel);
+    
+            return this.successStatus(groupDto);
+        } catch (e) {
+            return this.failureStatus(e.message);
+        }
     }
 
     @httpPut('/:id/edit')
-    public async editGroupById(req: App.Request<EditGroupDto>, res: App.Response) {
-        const id: Guid_v4 = req.params.id;
-
+    public async editGroupById(
+        @requestBody() editGroupDtoBody: EditGroupDto,
+        @requestParam('id') id: Guid_v4
+    ) {
         const [dtoResult, validationResult] = await this.validateAsync(
             EditGroupDto,
-            req.body
+            editGroupDtoBody
         );
 
         if (validationResult.hasErrors()) {
@@ -104,7 +108,6 @@ export class GroupsController extends BaseController implements App.IController 
             const groupDto = this.groupMapper.fromGroupModelToDTO(groupModel);
 
             return this.successStatus(groupDto);
-
         } catch (e) {
             return this.failureStatus(e.message)
         }

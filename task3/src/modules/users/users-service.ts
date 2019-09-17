@@ -3,7 +3,7 @@ import { injectable, inject } from 'inversify';
 import { Random } from '../../lib/random';
 import { BaseService } from '../../core/base-service';
 
-import { userTypes } from './connector';
+import { userTokens } from './tokens';
 import { IUsersRepository } from './users-repository';
 
 import { UserModel } from './models/user-model';
@@ -21,8 +21,8 @@ export interface IUserService {
 
 @injectable()
 export class UsersService extends BaseService implements IUserService {
-    @inject(userTypes.UsersRepository) private userRepository: IUsersRepository;
-    @inject(userTypes.UserDboMapper) private userMapper: UserModelDboMapper;
+    @inject(userTokens.UsersRepository) private userRepository: IUsersRepository;
+    @inject(userTokens.UserDboMapper) private userMapper: UserModelDboMapper;
 
     public async createUser(userModel: UserModel): Promise<UserModel> {
         const validationResult = await this.validateAsync(userModel);

@@ -1,6 +1,7 @@
 import { plainToClass } from 'class-transformer';
+import { injectable } from 'inversify';
 
-
+@injectable()
 export default class BaseMapper {
 
     protected empty (): Promise<null> {

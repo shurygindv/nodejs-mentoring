@@ -3,7 +3,7 @@ import { injectable, inject } from 'inversify';
 import { Random } from '../../lib/random';
 import { BaseService } from '../../core/base-service';
 
-import { imagesTypes } from './connector';
+import { imageTokens } from './tokens';
 import { IImagesRepository } from './images-repository';
 
 import { ImageModel } from './models/image-model';
@@ -19,8 +19,8 @@ export interface IImagesService {
 @injectable()
 export class ImagesService extends BaseService implements IImagesService {
 
-    @inject(imagesTypes.ImagesRepository) private imageRepository: IImagesRepository;
-    @inject(imagesTypes.ImageModelDboMapper) private mapper: ImageModelDboMapper;
+    @inject(imageTokens.ImagesRepository) private imageRepository: IImagesRepository;
+    @inject(imageTokens.ImageModelDboMapper) private mapper: ImageModelDboMapper;
 
     public async uploadImage(userModel: ImageModel): Promise<ImageModel> {
         const validationResult = await this.validateAsync(userModel);

@@ -1,13 +1,14 @@
 import {
     httpPost,
     controller,
+    requestBody,
 } from 'inversify-express-utils';
 import { JsonResult } from 'inversify-express-utils/dts/results';
 import { inject } from 'inversify';
 
 import { BaseController } from '../../core/base-controller';
 import { IImagesService } from './images-service';
-import { imagesTypes } from './connector';
+import { imageTokens } from './tokens';
 
 import { ImageDtoMapper } from './mapping/image-dto-mapper';
 
@@ -18,18 +19,16 @@ import { ImageDto } from './dto/image-dto';
 
 @controller('/images')
 export class ImagesController extends BaseController implements App.IController {
-    @inject(imagesTypes.ImagesService) private imageService: IImagesService;
-    @inject(imagesTypes.ImageDtoMapper) private mapper: ImageDtoMapper;
-
+    @inject(imageTokens.ImagesService) private imageService: IImagesService;
+    @inject(imageTokens.ImageDtoMapper) private mapper: ImageDtoMapper;
 
     @httpPost('/upload')
     public async uploadImage(
-        req: App.Request<UploadImageDto>,
-        res: App.Response
+        @requestBody() requestBody: UploadImageDto,
     ): Promise<JsonResult<ImageDto>> {
         const [dtoResult, validationResult] = await this.validateAsync(
             UploadImageDto,
-            req.body
+            requestBody
         );
 
         if (validationResult.hasErrors()) {

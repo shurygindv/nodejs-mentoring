@@ -8,7 +8,7 @@ import { UserDboModel } from './../../providers/sequelize/models/user-factory';
 
 import { UserModel } from './models/user-model';
 import { UserModelDboMapper } from './mapping/user-modeldbo-mapper';
-import { userTypes } from './connector';
+import { userTokens } from './tokens';
 
 export interface IUsersRepository {
     createUser(id: Guid_v4, userModel: UserModel): Promise<UserDboModel>;
@@ -21,7 +21,7 @@ export interface IUsersRepository {
 @injectable()
 export class UsersRepository extends BaseRepository implements IUsersRepository {
     @inject(dbTypes.UserModel) userRepo: typeof UserDboModel; // remake
-    @inject(userTypes.UserDboMapper) mapper: UserModelDboMapper;
+    @inject(userTokens.UserDboMapper) mapper: UserModelDboMapper;
 
     public async createUser(
         id: Guid_v4, 

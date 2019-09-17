@@ -8,33 +8,21 @@ import {GroupsRepository, IGroupsRepository} from './groups-repository';
 import { GroupDtoMapper } from './mapping/group-dto-mapper';
 import { GroupModelDboMapper } from './mapping/group-modeldbo-mapper';
 
-const groupTypes = {
-    GroupDtoMapper: 'GroupDtoMapper',
-    GroupDboMapper: 'GroupDboMapper',
+import {groupTokens} from './tokens';
 
-    GroupsController: 'GroupsController',
-    GroupsService: 'GroupsService',
-    GroupsRepository: 'GroupsRepository',
-}
-
-const connectGroupsModule = (container: interfaces.Container) => {
-    container.bind<GroupDtoMapper>(groupTypes.GroupDtoMapper)
+export const connectGroupsModule = (container: interfaces.Container) => {
+    container.bind<GroupDtoMapper>(groupTokens.GroupDtoMapper)
     .to(GroupDtoMapper);
 
-    container.bind<GroupModelDboMapper>(groupTypes.GroupDboMapper)
+    container.bind<GroupModelDboMapper>(groupTokens.GroupDboMapper)
     .to(GroupModelDboMapper);
 
-    container.bind<GroupsController>(groupTypes.GroupsController)
+    container.bind<GroupsController>(groupTokens.GroupsController)
         .to(GroupsController);
 
-    container.bind<GroupsService>(groupTypes.GroupsService)
+    container.bind<GroupsService>(groupTokens.GroupsService)
         .to(GroupsService);
 
-    container.bind<GroupsRepository>(groupTypes.GroupsRepository)
+    container.bind<GroupsRepository>(groupTokens.GroupsRepository)
         .to(GroupsRepository);
-}
-
-export {
-    groupTypes,
-    connectGroupsModule
 }

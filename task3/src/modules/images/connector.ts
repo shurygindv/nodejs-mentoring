@@ -8,33 +8,26 @@ import {ImagesRepository, IImagesRepository} from './images-repository';
 import { ImageDtoMapper } from './mapping/image-dto-mapper';
 import { ImageModelDboMapper } from './mapping/image-modeldbo-mapper';
 
-const imagesTypes = {
-    ImageDtoMapper: 'ImageDtoMapper',
-    ImageModelDboMapper: 'ImageModelDboMapper',
-
-    ImagesController: 'ImagesController',
-    ImagesService: 'ImagesService',
-    ImagesRepository: 'ImagesRepository',
-}
+import {imageTokens} from './tokens';
 
 const connectImagesModule = (container: interfaces.Container): void => {
-    container.bind<ImageDtoMapper>(imagesTypes.ImageDtoMapper)
+    container.bind<ImageDtoMapper>(imageTokens.ImageDtoMapper)
     .to(ImageDtoMapper);
 
-    container.bind<ImageModelDboMapper>(imagesTypes.ImageModelDboMapper)
+    container.bind<ImageModelDboMapper>(imageTokens.ImageModelDboMapper)
     .to(ImageModelDboMapper);
 
-    container.bind<ImagesController>(imagesTypes.ImagesController)
+    container.bind<ImagesController>(imageTokens.ImagesController)
         .to(ImagesController);
 
-    container.bind<ImagesService>(imagesTypes.ImagesService)
+    container.bind<ImagesService>(imageTokens.ImagesService)
         .to(ImagesService);
 
-    container.bind<ImagesRepository>(imagesTypes.ImagesRepository)
+    container.bind<ImagesRepository>(imageTokens.ImagesRepository)
         .to(ImagesRepository);
 }
 
 export {
-    imagesTypes, 
+    imageTypes, 
     connectImagesModule,  
 }

@@ -1,5 +1,6 @@
 
-import {interfaces} from 'inversify';
+
+import {Container} from 'inversify';
 
 import {UsersController} from './users-controller';
 import {UsersService, IUserService} from './users-service';
@@ -8,33 +9,21 @@ import {UsersRepository, IUsersRepository} from './users-repository';
 import { UserDtoMapper } from './mapping/user-dto-mapper';
 import { UserModelDboMapper } from './mapping/user-modeldbo-mapper';
 
-const userTypes = {
-    UserDtoMapper: 'UserDtoMapper',
-    UserDboMapper: 'UserDboMapper',
+import {userTokens} from './tokens';
 
-    UsersController: 'UsersController',
-    UsersService: 'UsersService',
-    UsersRepository: 'UsersRepository',
-}
-
-const connectUsersModule = (container: interfaces.Container): void => {
-    container.bind<UserDtoMapper>(userTypes.UserDtoMapper)
+export const connectUsersModule = (container: Container): void => {
+    container.bind<UserDtoMapper>(userTokens.UserDtoMapper)
     .to(UserDtoMapper);
 
-    container.bind<UserModelDboMapper>(userTypes.UserDboMapper)
+    container.bind<UserModelDboMapper>(userTokens.UserDboMapper)
     .to(UserModelDboMapper);
 
-    container.bind<UsersController>(userTypes.UsersController)
+    container.bind<UsersController>(userTokens.UsersController)
         .to(UsersController);
 
-    container.bind<UsersService>(userTypes.UsersService)
+    container.bind<UsersService>(userTokens.UsersService)
         .to(UsersService);
 
-    container.bind<UsersRepository>(userTypes.UsersRepository)
+    container.bind<UsersRepository>(userTokens.UsersRepository)
         .to(UsersRepository);
-}
-
-export {
-    userTypes, 
-    connectUsersModule,  
 }

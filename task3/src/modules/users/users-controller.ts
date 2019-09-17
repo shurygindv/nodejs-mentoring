@@ -2,8 +2,8 @@ import {
     httpGet,
     httpPost,
     httpPut,
-    response,
     controller,
+    requestBody,
     requestParam
 } from 'inversify-express-utils';
 import { JsonResult } from 'inversify-express-utils/dts/results';
@@ -11,7 +11,7 @@ import { inject } from 'inversify';
 
 import { BaseController } from '../../core/base-controller';
 import { IUserService } from './users-service';
-import { userTypes } from './connector';
+import { userTokens } from './tokens';
 
 import { UserDtoMapper } from './mapping/user-dto-mapper';
 
@@ -23,8 +23,8 @@ import { UserModel } from './models/user-model';
 
 @controller('/users')
 export class UsersController extends BaseController implements App.IController {
-    @inject(userTypes.UsersService) private userService: IUserService;
-    @inject(userTypes.UserDtoMapper) private userMapper: UserDtoMapper;
+    @inject(userTokens.UsersService) private userService: IUserService;
+    @inject(userTokens.UserDtoMapper) private userMapper: UserDtoMapper;
 
     // TODO: pagination
     @httpGet('/')
@@ -39,12 +39,11 @@ export class UsersController extends BaseController implements App.IController {
 
     @httpPost('/create')
     public async createUser(
-        req: App.Request<RegisterUserDto>,
-        res: App.Response
+        @requestBody() requestBody: RegisterUserDto,
     ) {
         const [dtoResult, validationResult] = await this.validateAsync(
             RegisterUserDto,
-            req.body
+            requestBody
         );
 
         if (validationResult.hasErrors()) {
@@ -61,12 +60,13 @@ export class UsersController extends BaseController implements App.IController {
     }
 
     @httpPut('/:id/edit')
-    public async editUserById(req: App.Request<EditUserDto>, res: App.Response) {
-        const id: Guid_v4 = req.params.id;
-
+    public async editUserById(
+        @requestBody() requestBody: EditUserDto,
+        @requestParam('id') id: Guid_v4
+    ) {
         const [dtoResult, validationResult] = await this.validateAsync(
             EditUserDto,
-            req.body
+            requestBody
         );
 
         if (validationResult.hasErrors()) {
@@ -88,7 +88,6 @@ export class UsersController extends BaseController implements App.IController {
     @httpGet('/:id/delete')
     public async deleteById(
         @requestParam('id') id: string,
-        @response() res: App.Response
     ): Promise<any> { 
         const [dto, validationResult] = await this.validateAsync<DeleteUserDto>(DeleteUserDto, {
             guid: id,

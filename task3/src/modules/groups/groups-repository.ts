@@ -8,7 +8,7 @@ import { GroupDboModel } from '../../providers/sequelize/models/group-factory';
 
 import { GroupModel } from './models/group-model';
 import { GroupModelDboMapper } from './mapping/group-modeldbo-mapper';
-import { groupTypes } from './connector';
+import { groupTokens } from './tokens';
 
 export interface IGroupsRepository {
     createGroup(id: Guid_v4, groupModel: GroupModel): Promise<GroupDboModel>;
@@ -21,7 +21,7 @@ export interface IGroupsRepository {
 @injectable()
 export class GroupsRepository extends BaseRepository implements IGroupsRepository {
     @inject(dbTypes.GroupModel) groupRepo: typeof GroupDboModel; // remake
-    @inject(groupTypes.GroupDboMapper) mapper: GroupModelDboMapper;
+    @inject(groupTokens.GroupDboMapper) mapper: GroupModelDboMapper;
 
     public async createGroup(
         id: Guid_v4, 

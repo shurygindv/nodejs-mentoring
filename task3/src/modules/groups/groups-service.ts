@@ -3,7 +3,7 @@ import { injectable, inject } from 'inversify';
 import { Random } from '../../lib/random';
 import { BaseService } from '../../core/base-service';
 
-import { groupTypes } from './connector';
+import { groupTokens } from './tokens';
 import { IGroupsRepository } from './groups-repository';
 
 import { GroupModel } from './models/group-model';
@@ -21,8 +21,8 @@ export interface IGroupsService {
 
 @injectable()
 export class GroupsService extends BaseService implements IGroupsService {
-    @inject(groupTypes.GroupsRepository) private groupRepository: IGroupsRepository;
-    @inject(groupTypes.GroupDboMapper) private groupMapper: GroupModelDboMapper;
+    @inject(groupTokens.GroupsRepository) private groupRepository: IGroupsRepository;
+    @inject(groupTokens.GroupDboMapper) private groupMapper: GroupModelDboMapper;
 
     public async createGroup(groupModel: GroupModel): Promise<GroupModel> {
         const validationResult = await this.validateAsync(groupModel);
