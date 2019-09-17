@@ -12,18 +12,18 @@ import { UserModelDboMapper } from './mapping/user-modeldbo-mapper';
 import {userTokens} from './tokens';
 
 export const connectUsersModule = (container: Container): void => {
-    container.bind<UserDtoMapper>(userTokens.UserDtoMapper)
+    container.bind<UserDtoMapper>(userTokens.userDtoMapper)
     .to(UserDtoMapper);
 
-    container.bind<UserModelDboMapper>(userTokens.UserDboMapper)
+    container.bind<UserModelDboMapper>(userTokens.userDboMapper)
     .to(UserModelDboMapper);
 
-    container.bind<UsersController>(userTokens.UsersController)
+    container.bind<UsersController>(userTokens.usersController)
         .to(UsersController);
 
-    container.bind<UsersService>(userTokens.UsersService)
+    container.bind<UsersService>(userTokens.usersService)
         .to(UsersService);
 
-    container.bind<UsersRepository>(userTokens.UsersRepository)
+    container.bind<UsersRepository>(userTokens.usersRepository)
         .to(UsersRepository);
 }

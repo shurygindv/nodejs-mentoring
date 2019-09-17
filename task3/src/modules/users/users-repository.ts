@@ -22,7 +22,7 @@ export interface IUsersRepository {
 @injectable()
 export class UsersRepository extends BaseRepository implements IUsersRepository {
     @inject(dbTokens.userModel) userRepo: typeof UserDboModel; // remake
-    @inject(userTokens.UserDboMapper) mapper: UserModelDboMapper;
+    @inject(userTokens.userDboMapper) mapper: UserModelDboMapper;
 
     public async createUser(
         id: Guid_v4, 

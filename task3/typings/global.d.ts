@@ -44,6 +44,10 @@ export declare global {
             ErrorDescription: string;
             ErrorCode: number;
         }
+
+        export enum ErrorCode {
+            AuthError = 0,
+        }
     }
     
     export namespace TS {

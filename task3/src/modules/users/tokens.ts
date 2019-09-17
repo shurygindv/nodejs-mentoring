@@ -1,8 +1,8 @@
 export const userTokens = {
-    UserDtoMapper: 'UserDtoMapper',
-    UserDboMapper: 'UserDboMapper',
+    userDtoMapper: 'UserDtoMapper',
+    userDboMapper: 'UserDboMapper',
 
-    UsersController: 'UsersController',
-    UsersService: 'UsersService',
-    UsersRepository: 'UsersRepository',
+    usersController: 'UsersController',
+    usersService: 'UsersService',
+    usersRepository: 'UsersRepository',
 }

@@ -21,11 +21,14 @@ export class Status {
     }
 
     public static Error (
-        errorCode: string,
+        errorCode: number,
         errorMessage: string,
         statusCode: HttpStatusCode = HttpStatusCode.BadRequest
     ) {
-        return new HttpFailureResult(statusCode, {errorCode, errorMessage})
+        return new HttpFailureResult(
+            statusCode, 
+            {errorCode: `${errorCode}`, errorMessage}
+        );
     }
 
     public static ValidationError (

@@ -21,11 +21,22 @@ import { EditUserDTO } from './dto/edit-user-dto';
 import { LoginUserDTO } from './dto/login-user-dto';
 
 import { UserModel } from './models/user-model';
+import { providerTokens } from '../../providers/tokens';
+import { AuthProvider } from '../../providers/authorization/auth-provider';
+
+const using = {
+    userService: userTokens.usersService,
+    userDtoMapper: userTokens.userDtoMapper,
+
+    authProvider: providerTokens.auth.authProvider,
+}
 
 @controller('/users')
 export class UsersController extends BaseController implements App.IController {
-    @inject(userTokens.UsersService) private userService: IUserService;
-    @inject(userTokens.UserDtoMapper) private userMapper: UserDtoMapper;
+    @inject(using.userService) private userService: IUserService;
+    @inject(using.userDtoMapper) private userMapper: UserDtoMapper;
+
+    @inject(using.authProvider) private authProvider: AuthProvider;
 
     // TODO: pagination
     @httpGet('/')

@@ -22,8 +22,8 @@ export interface IUserService {
 
 @injectable()
 export class UsersService extends BaseService implements IUserService {
-    @inject(userTokens.UsersRepository) private userRepository: IUsersRepository;
-    @inject(userTokens.UserDboMapper) private userMapper: UserModelDboMapper;
+    @inject(userTokens.usersRepository) private userRepository: IUsersRepository;
+    @inject(userTokens.userDboMapper) private userMapper: UserModelDboMapper;
 
     public async createUser(userModel: UserModel): Promise<UserModel> {
         const validationResult = await this.validateAsync(userModel);
