@@ -5,12 +5,12 @@ import {connectUsersModule} from './modules/users/connector';
 import {connectGroupsModule} from './modules/groups/connector';
 
 // providers
-import { connectDatabaseProvider } from './providers/sequelize/connect-database';
+import { connectProviders } from './providers/connector';
 
 type ConnectorFunc = (container: Container) => void;
 
 const connected: ConnectorFunc[] = [
-    connectDatabaseProvider,
+    connectProviders,
 
     connectUsersModule,
     connectGroupsModule

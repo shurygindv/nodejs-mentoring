@@ -37,6 +37,16 @@ export class UsersController extends BaseController implements App.IController {
         return this.successStatus(users);
     }
 
+    @httpPost('/auth')
+    public async auth(
+        req: App.Request,
+        res: App.Response
+    ): Promise<JsonResult<[]>> {
+        const users = await this.userService.getAllUsers();
+
+        return this.successStatus(users);
+    }
+
     @httpPost('/create')
     public async createUser(
         @requestBody() requestBody: RegisterUserDto,

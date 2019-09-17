@@ -3,7 +3,7 @@ import { injectable, inject } from 'inversify';
 
 import { BaseRepository } from '../../core/base-repository';
 
-import { dbTypes } from '../../providers/sequelize/dbTypes';
+import { dbTypes } from '../../providers/sequelize/tokens';
 import { ImageDboModel } from '../../providers/sequelize/models/image-factory';
 
 import { ImageModel } from './models/image-model';

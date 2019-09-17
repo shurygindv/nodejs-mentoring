@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { BaseRepository } from '../../core/base-repository';
 
-import { dbTypes } from '../../providers/sequelize/dbTypes';
+import { dbTypes } from '../../providers/sequelize/tokens';
 import { GroupDboModel } from '../../providers/sequelize/models/group-factory';
 
 import { GroupModel } from './models/group-model';

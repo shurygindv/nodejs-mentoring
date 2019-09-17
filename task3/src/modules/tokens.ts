@@ -1,9 +1,9 @@
-import {userTokens} from './users/tokens.ts';
-import {groupTypes} from './groups/connector';
-import {imageTypes} from './images/connector';
+import {userTokens} from './users/tokens';
+import {groupTokens} from './groups/tokens';
+import {imageTokens} from './images/tokens';
 
-export const Types = {
-    userTokens,
-    imageTypes,
-    groupTypes
+export const moduleTokens = {
+    users: userTokens,
+    images: imageTokens,
+    groups: groupTokens,
 };

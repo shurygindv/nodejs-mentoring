@@ -14,6 +14,7 @@ import { NotFoundUserError } from './errors/not-found-user-error';
 export interface IUserService {
     createUser(userModel: UserModel): Promise<UserModel>;
     getUserById(id: string): Promise<TS.MaybeNull<UserModel>>;
+    getUserByLogin(Login: string): Promise<TS.MaybeNull<UserModel>>;
     getAllUsers(): Promise<UserModel[]>;
     editUserById(id: Guid_v4, userModel: UserModel): Promise<UserModel>;
     deleteUserById(id: Guid_v4): Promise<UserModel>;
@@ -43,6 +44,12 @@ export class UsersService extends BaseService implements IUserService {
 
     public async getUserById (id: Guid_v4): Promise<TS.MaybeNull<UserModel>> {
         const outputUserDbo = await this.userRepository.getById(id);
+    
+        return await this.userMapper.fromDboToUserModel(outputUserDbo)
+    }
+
+    public async getUserByLogin (login: string): Promise<TS.MaybeNull<UserModel>> {
+        const outputUserDbo = await this.userRepository.getByLogin(login);
     
         return await this.userMapper.fromDboToUserModel(outputUserDbo)
     }

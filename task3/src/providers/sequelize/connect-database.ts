@@ -6,18 +6,18 @@ import { envConfig } from '../../config/environment';
 import { UserFactory } from './models/user-factory';
 import { GroupFactory } from './models/group-factory';
 
-import { dbTypes } from './dbTypes';
+import { dbTokens } from './tokens';
 
  // TODO: Injectable Async provider
 export const connectDatabaseProvider = (container: Container): void => {
     const sequelize = new Sequelize(envConfig.connectionString);
 
     container
-        .bind(dbTypes.UserModel)
+        .bind(dbTokens.userModel)
         .toConstantValue(UserFactory(sequelize));
 
     container
-        .bind(dbTypes.GroupModel)
+        .bind(dbTokens.groupModel)
         .toConstantValue(GroupFactory(sequelize));
 
     sequelize.sync();
