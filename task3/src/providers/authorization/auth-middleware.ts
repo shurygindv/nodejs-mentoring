@@ -43,7 +43,7 @@ const selectStatus = (e: Error): HttpFailureResult | void  => {
 } 
 
 @injectable()
-class AuthMiddleware extends BaseMiddleware {
+export class AuthMiddleware extends BaseMiddleware {
     @inject(authTokens.authProvider) private authProvider: AuthProvider;
 
 

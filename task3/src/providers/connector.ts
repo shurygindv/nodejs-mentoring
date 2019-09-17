@@ -6,13 +6,21 @@ import {AuthProvider} from './authorization/auth-provider';
 import {connectDatabaseProvider} from './sequelize/connect-database';
 
 import {providerTokens} from './tokens';
+import { AuthMiddleware } from './authorization/auth-middleware';
+
+const using: Record<string, string> = {
+    AuthProvider: providerTokens.auth.authProvider,
+    AuthMiddleware: providerTokens.auth.authMiddleware,
+    JwtProvider: providerTokens.jwtProvider
+}
 
 const connectAuthProvider = (container: Container): void => {
-    container.bind(providerTokens.authProvider).to(AuthProvider);
+    container.bind(using.AuthProvider).to(AuthProvider);
+    container.bind(using.AuthMiddleware).to(AuthMiddleware);
 }
 
 const connectJwtProvider = (container: Container): void => {
-    container.bind(providerTokens.jwtProvider).to(JwtProvider);
+    container.bind(using.JwtProvider).to(JwtProvider);
 }
 
 export const connectProviders = (container: Container): void => [
