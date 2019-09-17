@@ -15,9 +15,10 @@ import { userTokens } from './tokens';
 
 import { UserDtoMapper } from './mapping/user-dto-mapper';
 
-import { RegisterUserDto } from './dto/register-user-dto';
-import { DeleteUserDto } from './dto/delete-user-dto';
-import { EditUserDto } from './dto/edit-user-dto';
+import { CreateUserDTO } from './dto/create-user-dto';
+import { DeleteUserDTO } from './dto/delete-user-dto';
+import { EditUserDTO } from './dto/edit-user-dto';
+import { LoginUserDTO } from './dto/login-user-dto';
 
 import { UserModel } from './models/user-model';
 
@@ -37,10 +38,9 @@ export class UsersController extends BaseController implements App.IController {
         return this.successStatus(users);
     }
 
-    @httpPost('/auth')
-    public async auth(
-        req: App.Request,
-        res: App.Response
+    @httpPost('/login')
+    public async login(
+        @requestBody() requestBody: LoginUserDTO,
     ): Promise<JsonResult<[]>> {
         const users = await this.userService.getAllUsers();
 
@@ -49,10 +49,10 @@ export class UsersController extends BaseController implements App.IController {
 
     @httpPost('/create')
     public async createUser(
-        @requestBody() requestBody: RegisterUserDto,
+        @requestBody() requestBody: CreateUserDTO,
     ) {
         const [dtoResult, validationResult] = await this.validateAsync(
-            RegisterUserDto,
+            CreateUserDTO,
             requestBody
         );
 
@@ -71,11 +71,11 @@ export class UsersController extends BaseController implements App.IController {
 
     @httpPut('/:id/edit')
     public async editUserById(
-        @requestBody() requestBody: EditUserDto,
+        @requestBody() requestBody: EditUserDTO,
         @requestParam('id') id: Guid_v4
     ) {
         const [dtoResult, validationResult] = await this.validateAsync(
-            EditUserDto,
+            EditUserDTO,
             requestBody
         );
 
@@ -99,9 +99,10 @@ export class UsersController extends BaseController implements App.IController {
     public async deleteById(
         @requestParam('id') id: string,
     ): Promise<any> { 
-        const [dto, validationResult] = await this.validateAsync<DeleteUserDto>(DeleteUserDto, {
-            guid: id,
-        });
+        const [dto, validationResult] = await this.validateAsync<DeleteUserDTO>(
+            DeleteUserDTO, 
+            {guid: id}
+        );
 
         if (validationResult.hasErrors()) {
             return this.statusWithValidationErrors(validationResult.result);

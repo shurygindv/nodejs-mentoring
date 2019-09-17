@@ -1,13 +1,13 @@
 import { BaseMapper } from '../../../lib/mapping';
 
-import { RegisterUserDto } from '../dto/register-user-dto';
-import { EditUserDto } from '../dto/edit-user-dto';
+import { CreateUserDTO } from '../dto/create-user-dto';
+import { EditUserDTO } from '../dto/edit-user-dto';
 // to =>
 import { UserModel } from '../models/user-model';
-import { UserDto } from '../dto/user-dto';
+import { UserDTO } from '../dto/user-dto';
 
 export class UserDtoMapper extends BaseMapper {
-    public fromRegisterDtoToUserModel (dto: RegisterUserDto): Promise<UserModel> {
+    public fromRegisterDtoToUserModel (dto: CreateUserDTO): Promise<UserModel> {
         const model: UserModel = this.createInstance<UserModel>(UserModel, {
             age: dto.age,
             login: dto.login,
@@ -17,7 +17,7 @@ export class UserDtoMapper extends BaseMapper {
         return this.beLazy(model);
     }
 
-    public fromEditDtoToUserModel (dto: EditUserDto): Promise<UserModel> {
+    public fromEditDtoToUserModel (dto: EditUserDTO): Promise<UserModel> {
         const model: UserModel = this.createInstance<UserModel>(UserModel, {
             age: dto.age,
             login: dto.login,
@@ -27,8 +27,8 @@ export class UserDtoMapper extends BaseMapper {
         return this.beLazy(model);
     }
 
-    public fromUserModelToDTO (model: UserModel): Promise<UserDto> {
-        const dto: UserDto = {
+    public fromUserModelToDTO (model: UserModel): Promise<UserDTO> {
+        const dto: UserDTO = {
             id: model.id as Guid_v4,
             login: model.login,
             age: model.age

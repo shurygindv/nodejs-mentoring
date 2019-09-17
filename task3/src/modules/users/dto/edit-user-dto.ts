@@ -2,7 +2,7 @@ import {MinLength, IsNotEmpty, IsNumber} from 'class-validator';
 
 import { IValidatable } from '../../../lib/validation/validatable';
 
-class EditUserDto implements IValidatable {
+export class EditUserDTO implements IValidatable {
     @MinLength(3)
     @IsNotEmpty()
     public login: string;
@@ -13,8 +13,4 @@ class EditUserDto implements IValidatable {
 
     @IsNotEmpty()
     public confirmPassword: Guid_v4;
-}
-
-export {
-    EditUserDto,
 }
