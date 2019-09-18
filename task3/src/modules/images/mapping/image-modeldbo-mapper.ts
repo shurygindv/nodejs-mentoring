@@ -1,6 +1,6 @@
 import {BaseMapper} from '../../../lib/mapping';
 
-import {ImageDboModel} from '../../../providers/sequelize/models/image-factory';
+import {ImageDboModel} from '../../../providers/database/models/images';
 // to =>
 import {ImageModel} from '../models/image-model';
 

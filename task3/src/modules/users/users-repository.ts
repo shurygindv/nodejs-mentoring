@@ -3,8 +3,8 @@ import {injectable, inject} from 'inversify';
 
 import {BaseRepository} from '../../core/base-repository';
 
-import {dbTokens} from '../../providers/sequelize/tokens';
-import {UserDboModel} from './../../providers/sequelize/models/user-factory';
+import {dbTokens} from '../../providers/database/tokens';
+import {UserDboModel} from '../../providers/database/models/users';
 
 import {UserModel} from './models/user-model';
 import {UserModelDboMapper} from './mapping/user-modeldbo-mapper';

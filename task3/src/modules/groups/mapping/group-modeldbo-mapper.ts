@@ -1,6 +1,6 @@
 import {BaseMapper} from '../../../lib/mapping';
 
-import {GroupDboModel} from '../../../providers/sequelize/models/group-factory';
+import {GroupDboModel} from '../../../providers/database/models/groups';
 // to =>
 import {GroupModel} from '../models/group-model';
 

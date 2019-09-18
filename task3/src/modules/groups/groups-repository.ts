@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 import {BaseRepository} from '../../core/base-repository';
 
-import {dbTokens} from '../../providers/sequelize/tokens';
-import {GroupDboModel} from '../../providers/sequelize/models/group-factory';
+import {dbTokens} from '../../providers/database/tokens';
+import {GroupDboModel} from '../../providers/database/models/groups';
 
 import {GroupModel} from './models/group-model';
 import {GroupModelDboMapper} from './mapping/group-modeldbo-mapper';

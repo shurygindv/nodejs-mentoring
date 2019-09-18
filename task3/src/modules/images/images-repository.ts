@@ -2,8 +2,8 @@ import {injectable, inject} from 'inversify';
 
 import {BaseRepository} from '../../core/base-repository';
 
-import {dbTokens} from '../../providers/sequelize/tokens';
-import {ImageDboModel} from '../../providers/sequelize/models/image-factory';
+import {dbTokens} from '../../providers/database/tokens';
+import {ImageDboModel} from '../../providers/database/models/images';
 
 import {ImageModel} from './models/image-model';
 import {ImageModelDboMapper} from './mapping/image-modeldbo-mapper';

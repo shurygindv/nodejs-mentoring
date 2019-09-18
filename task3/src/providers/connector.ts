@@ -3,7 +3,7 @@ import {Container} from 'inversify';
 import {JwtProvider} from './jwt/jwt-provider';
 import {AuthProvider} from './authorization/auth-provider';
 
-import {connectDatabaseProvider} from './sequelize/connect-database';
+import {connectDatabaseProvider} from './database/connect-database';
 
 import {providerTokens} from './tokens';
 import {AuthMiddleware} from './authorization/auth-middleware';

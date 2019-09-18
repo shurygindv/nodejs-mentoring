@@ -1,19 +1,13 @@
 import {Container} from 'inversify';
 
-// modules
-import {connectUsersModule} from './modules/users/connector';
-import {connectGroupsModule} from './modules/groups/connector';
-
-// providers
 import {connectProviders} from './providers/connector';
+import {connectApiModules} from "./modules/connector";
 
 type ConnectorFunc = (container: Container) => void;
 
 const connected: ConnectorFunc[] = [
     connectProviders,
-
-    connectUsersModule,
-    connectGroupsModule,
+    connectApiModules
 ];
 
 export const bootstrap = (container: Container): void => {

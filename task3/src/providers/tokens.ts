@@ -1,4 +1,4 @@
-import {dbTokens} from './sequelize/tokens';
+import {dbTokens} from './database/tokens';
 import {authTokens} from './authorization/tokens';
 
 export const providerTokens = {

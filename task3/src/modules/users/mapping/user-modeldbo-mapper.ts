@@ -1,6 +1,6 @@
 import {BaseMapper} from '../../../lib/mapping';
 
-import {UserDboModel} from '../../../providers/sequelize/models/user-factory';
+import {UserDboModel} from '../../../providers/database/models/users';
 // to =>
 import {UserModel} from '../models/user-model';
 

@@ -1,6 +1,6 @@
 import * as sequelize from 'sequelize';
 
-import {SequelizeTypes} from '../local-sequelize';
+import {Database, DataTypes} from "../database";
 
 export enum GroupPermission {
     READ = 'Read',
@@ -10,25 +10,25 @@ export enum GroupPermission {
     UPLOAD_FILES = 'UPLOAD_FILES',
 }
 
-class GroupDboModel extends sequelize.Model {
+class GroupModel extends sequelize.Model {
     public id: guidV4;
     public name: string;
     public permissions: GroupPermission;
 }
 
-const GroupFactory = (sequelize: sequelize.Sequelize) => {
+const GroupFactory = (db: Database) => {
     const columns = {
         id: {
-            type: SequelizeTypes.STRING,
+            type: DataTypes.STRING,
             primaryKey: true,
             unique: true,
         },
         name: {
-            type: SequelizeTypes.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         permissions: {
-            type: SequelizeTypes.ENUM(
+            type: DataTypes.ENUM(
                 GroupPermission.READ,
                 GroupPermission.WRITE,
                 GroupPermission.SHARE,
@@ -40,14 +40,14 @@ const GroupFactory = (sequelize: sequelize.Sequelize) => {
     };
 
     const options = {
-        sequelize,
+        sequelize: db.core,
         timestamps: false,
-        modelName: 'Group',
+        modelName: 'Groups',
     };
 
-    GroupDboModel.init(columns, options);
+    GroupModel.init(columns, options);
 
-    return GroupDboModel;
+    return GroupModel;
 };
 
-export {GroupFactory, GroupDboModel};
+export {GroupFactory, GroupModel};
