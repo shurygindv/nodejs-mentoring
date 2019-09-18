@@ -1,11 +1,11 @@
-import { HttpStatusCode } from './http-status-code';
-import { ValidationError } from 'class-validator';
+import {HttpStatusCode} from './http-status-code';
+import {ValidationError} from 'class-validator';
 
 class HttpResult<R> {
     public statusCode: HttpStatusCode;
     public data: R;
 
-    public constructor (statusCode: HttpStatusCode, data: R) {
+    public constructor(statusCode: HttpStatusCode, data: R) {
         this.statusCode = statusCode;
         this.data = data;
     }
@@ -14,9 +14,9 @@ class HttpResult<R> {
 //
 
 type HttpSuccessData<T> = {
-    success: boolean,
-    data: T
-}
+    success: boolean;
+    data: T;
+};
 
 class HttpSuccessResult<T> extends HttpResult<HttpSuccessData<T>> {}
 
@@ -30,8 +30,4 @@ type HttpFailureData = {
 
 class HttpFailureResult extends HttpResult<HttpFailureData> {}
 
-export {
-    HttpResult,
-    HttpSuccessResult,
-    HttpFailureResult
-};
+export {HttpResult, HttpSuccessResult, HttpFailureResult};

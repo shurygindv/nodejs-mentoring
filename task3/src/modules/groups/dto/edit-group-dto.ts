@@ -1,7 +1,7 @@
 import {MinLength, IsNotEmpty, IsEnum} from 'class-validator';
 
-import { IValidatable } from '../../../lib/validation/validatable';
-import { GroupPermission } from '../../../providers/sequelize/models/group-factory';
+import {IValidatable} from '../../../lib/validation/validatable';
+import {GroupPermission} from '../../../providers/sequelize/models/group-factory';
 
 class EditGroupDto implements IValidatable {
     @MinLength(5)
@@ -11,9 +11,6 @@ class EditGroupDto implements IValidatable {
     @IsNotEmpty()
     @IsEnum(GroupPermission)
     public permissions: GroupPermission;
-
 }
 
-export {
-    EditGroupDto,
-}
+export {EditGroupDto};

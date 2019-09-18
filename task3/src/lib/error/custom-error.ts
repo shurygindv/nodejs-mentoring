@@ -3,7 +3,7 @@ const ERROR_NAME = 'CustomError';
 class CustomError extends Error {
     protected description?: string;
 
-    public constructor (message?: string) {
+    public constructor(message?: string) {
         super(message);
 
         this.name = ERROR_NAME;
@@ -13,17 +13,14 @@ class CustomError extends Error {
 }
 
 // not used yet
-const generateCustomErrorClass = (token: string, desc?: string) => 
+const generateCustomErrorClass = (token: string, desc?: string) =>
     class extends CustomError {
-        constructor (message: string) {
+        constructor(message: string) {
             super(message);
 
             this.name = token;
             this.description = desc;
         }
-}
+    };
 
-export {
-    generateCustomErrorClass,
-    CustomError
-};
+export {generateCustomErrorClass, CustomError};

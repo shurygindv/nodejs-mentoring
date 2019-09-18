@@ -4,33 +4,33 @@ import {
     httpPut,
     controller,
     requestBody,
-    requestParam
+    requestParam,
 } from 'inversify-express-utils';
-import { JsonResult } from 'inversify-express-utils/dts/results';
-import { inject } from 'inversify';
+import {JsonResult} from 'inversify-express-utils/dts/results';
+import {inject} from 'inversify';
 
-import { BaseController } from '../../core/base-controller';
-import { IUserService } from './users-service';
-import { userTokens } from './tokens';
+import {BaseController} from '../../core/base-controller';
+import {IUserService} from './users-service';
+import {userTokens} from './tokens';
 
-import { UserDtoMapper } from './mapping/user-dto-mapper';
+import {UserDtoMapper} from './mapping/user-dto-mapper';
 
-import { CreateUserDTO } from './dto/create-user-dto';
-import { DeleteUserDTO } from './dto/delete-user-dto';
-import { EditUserDTO } from './dto/edit-user-dto';
-import { LoginUserDTO } from './dto/login-user-dto';
+import {CreateUserDTO} from './dto/create-user-dto';
+import {DeleteUserDTO} from './dto/delete-user-dto';
+import {EditUserDTO} from './dto/edit-user-dto';
+import {LoginUserDTO} from './dto/login-user-dto';
 
-import { UserModel } from './models/user-model';
-import { providerTokens } from '../../providers/tokens';
-import { AuthProvider } from '../../providers/authorization/auth-provider';
-import { AuthModel } from '../../providers/authorization/auth-model';
+import {UserModel} from './models/user-model';
+import {providerTokens} from '../../providers/tokens';
+import {AuthProvider} from '../../providers/authorization/auth-provider';
+import {AuthModel} from '../../providers/authorization/auth-model';
 
 const using = {
     userService: userTokens.usersService,
     userDtoMapper: userTokens.userDtoMapper,
 
     authProvider: providerTokens.auth.authProvider,
-}
+};
 
 @controller('/users')
 export class UsersController extends BaseController implements App.IController {
@@ -43,7 +43,7 @@ export class UsersController extends BaseController implements App.IController {
     @httpGet('/')
     public async index(
         req: App.Request,
-        res: App.Response
+        res: App.Response,
     ): Promise<JsonResult<[]>> {
         const users = await this.userService.getAllUsers();
 
@@ -52,11 +52,11 @@ export class UsersController extends BaseController implements App.IController {
 
     @httpPost('/login')
     public async login(
-        @requestBody() requestBody: LoginUserDTO,
+        @requestBody() reqUserBody: LoginUserDTO,
     ): Promise<JsonResult<[]>> {
         const [{data}, validationResult] = await this.validateAsync(
             LoginUserDTO,
-            requestBody
+            reqUserBody,
         );
 
         if (validationResult.hasErrors()) {
@@ -65,26 +65,26 @@ export class UsersController extends BaseController implements App.IController {
 
         const auth: AuthModel = await this.authProvider.login(
             data.login,
-            data.password
+            data.password,
         );
 
         return this.successStatus(auth);
     }
 
     @httpPost('/create')
-    public async createUser(
-        @requestBody() requestBody: CreateUserDTO,
-    ) {
+    public async createUser(@requestBody() reqUserBody: CreateUserDTO) {
         const [dtoResult, validationResult] = await this.validateAsync(
             CreateUserDTO,
-            requestBody
+            reqUserBody,
         );
 
         if (validationResult.hasErrors()) {
             return this.statusWithValidationErrors(validationResult.result);
         }
 
-        const model: UserModel = await this.userMapper.fromRegisterDtoToUserModel(dtoResult.data);
+        const model: UserModel = await this.userMapper.fromRegisterDtoToUserModel(
+            dtoResult.data,
+        );
 
         const outputModel = await this.userService.createUser(model);
 
@@ -95,23 +95,25 @@ export class UsersController extends BaseController implements App.IController {
 
     @httpPut('/:id/edit')
     public async editUserById(
-        @requestBody() requestBody: EditUserDTO,
-        @requestParam('id') id: Guid_v4
+        @requestBody() reqUserBody: EditUserDTO,
+        @requestParam('id') id: guidV4,
     ) {
         const [dtoResult, validationResult] = await this.validateAsync(
             EditUserDTO,
-            requestBody
+            reqUserBody,
         );
 
         if (validationResult.hasErrors()) {
             return this.statusWithValidationErrors(validationResult.result);
         }
 
-        const model: UserModel = await this.userMapper.fromEditDtoToUserModel(dtoResult.data);
+        const model: UserModel = await this.userMapper.fromEditDtoToUserModel(
+            dtoResult.data,
+        );
 
         const outputModel: UserModel = await this.userService.editUserById(
-            id, 
-            model
+            id,
+            model,
         );
 
         const userDto = this.userMapper.fromUserModelToDTO(outputModel);
@@ -120,12 +122,10 @@ export class UsersController extends BaseController implements App.IController {
     }
 
     @httpGet('/:id/delete')
-    public async deleteById(
-        @requestParam('id') id: string,
-    ): Promise<any> { 
+    public async deleteById(@requestParam('id') id: string): Promise<any> {
         const [dto, validationResult] = await this.validateAsync<DeleteUserDTO>(
-            DeleteUserDTO, 
-            {guid: id}
+            DeleteUserDTO,
+            {guid: id},
         );
 
         if (validationResult.hasErrors()) {
@@ -133,14 +133,15 @@ export class UsersController extends BaseController implements App.IController {
         }
 
         try {
-            const userModel: UserModel = await this.userService.deleteUserById(id);
+            const userModel: UserModel = await this.userService.deleteUserById(
+                id,
+            );
 
             const userDto = this.userMapper.fromUserModelToDTO(userModel);
 
             return this.successStatus(userDto);
-
         } catch (e) {
-            return this.failureStatus(e.message)
+            return this.failureStatus(e.message);
         }
     }
 }

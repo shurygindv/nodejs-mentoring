@@ -1,7 +1,6 @@
-
 export class ImageModel {
-    public id?: Guid_v4;
+    public id?: guidV4;
     public fileName?: string;
     public mimeType: string;
-    public data: Buffer[]
+    public data: Buffer[];
 }

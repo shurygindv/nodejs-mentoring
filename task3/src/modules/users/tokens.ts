@@ -5,4 +5,4 @@ export const userTokens = {
     usersController: 'UsersController',
     usersService: 'UsersService',
     usersRepository: 'UsersRepository',
-}
+};

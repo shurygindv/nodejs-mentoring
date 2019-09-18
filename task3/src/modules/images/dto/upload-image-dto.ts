@@ -1,7 +1,6 @@
 import {IsMultibyte, IsNotEmpty} from 'class-validator';
 
-import { IValidatable } from '../../../lib/validation/validatable';
-
+import {IValidatable} from '../../../lib/validation/validatable';
 
 class UploadImageDto implements IValidatable {
     @IsMultibyte()
@@ -15,6 +14,4 @@ class UploadImageDto implements IValidatable {
     public mimeType: string;
 }
 
-export {
-    UploadImageDto
-}
+export {UploadImageDto};

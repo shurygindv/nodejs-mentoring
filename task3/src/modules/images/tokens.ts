@@ -5,4 +5,4 @@ export const imageTokens = {
     ImagesController: 'ImagesController',
     ImagesService: 'ImagesService',
     ImagesRepository: 'ImagesRepository',
-}
+};

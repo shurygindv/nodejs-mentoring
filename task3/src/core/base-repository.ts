@@ -1,4 +1,4 @@
 import {injectable} from 'inversify';
 
 @injectable()
-export class BaseRepository  {}
+export class BaseRepository {}

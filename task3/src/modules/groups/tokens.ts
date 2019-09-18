@@ -1,8 +1,8 @@
 export const groupTokens = {
-    GroupDtoMapper: 'GroupDtoMapper',
-    GroupDboMapper: 'GroupDboMapper',
+    groupDtoMapper: 'GroupDtoMapper',
+    groupDboMapper: 'GroupDboMapper',
 
-    GroupsController: 'GroupsController',
-    GroupsService: 'GroupsService',
-    GroupsRepository: 'GroupsRepository',
-}
+    groupsController: 'GroupsController',
+    groupsService: 'GroupsService',
+    groupsRepository: 'GroupsRepository',
+};

@@ -1,7 +1,7 @@
 import {MinLength, IsNotEmpty, IsEnum} from 'class-validator';
 
-import { IValidatable } from '../../../lib/validation/validatable';
-import { GroupPermission } from '../../../providers/sequelize/models/group-factory';
+import {IValidatable} from '../../../lib/validation/validatable';
+import {GroupPermission} from '../../../providers/sequelize/models/group-factory';
 
 class CreateGroupDto implements IValidatable {
     @MinLength(5)
@@ -13,6 +13,4 @@ class CreateGroupDto implements IValidatable {
     public permissions: GroupPermission;
 }
 
-export {
-    CreateGroupDto
-}
+export {CreateGroupDto};

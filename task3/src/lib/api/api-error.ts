@@ -5,7 +5,7 @@ const API_ERROR_NAME = 'ApiError';
 export default class ApiError<T> extends CustomError {
     private errors: T[];
 
-    public constructor (errors: T[]) {
+    public constructor(errors: T[]) {
         super();
 
         this.name = API_ERROR_NAME;
@@ -13,7 +13,7 @@ export default class ApiError<T> extends CustomError {
         this.errors = errors;
     }
 
-    hasErrors (): boolean {
+    hasErrors(): boolean {
         return Boolean(this.errors);
     }
 }

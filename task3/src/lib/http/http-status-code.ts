@@ -1,96 +1,95 @@
-
 export enum HttpStatusCode {
-        Continue = 100,
+    Continue = 100,
 
-        SwitchingProtocols = 101,
+    SwitchingProtocols = 101,
 
-        OK = 200,
+    OK = 200,
 
-        Created = 201,
+    Created = 201,
 
-        Accepted = 202,
+    Accepted = 202,
 
-        NonAuthoritativeInformation = 203,
+    NonAuthoritativeInformation = 203,
 
-        NoContent = 204,
+    NoContent = 204,
 
-        ResetContent = 205,
+    ResetContent = 205,
 
-        PartialContent = 206,
+    PartialContent = 206,
 
-        MultipleChoices = 300,
+    MultipleChoices = 300,
 
-        Ambiguous = 300,
+    Ambiguous = 300,
 
-        MovedPermanently = 301,
+    MovedPermanently = 301,
 
-        Moved = 301,
+    Moved = 301,
 
-        Found = 302,
+    Found = 302,
 
-        Redirect = 302,
+    Redirect = 302,
 
-        SeeOther = 303,
+    SeeOther = 303,
 
-        RedirectMethod = 303,
+    RedirectMethod = 303,
 
-        NotModified = 304,
+    NotModified = 304,
 
-        UseProxy = 305,
+    UseProxy = 305,
 
-        Unused = 306,
+    Unused = 306,
 
-        TemporaryRedirect = 307,
+    TemporaryRedirect = 307,
 
-        RedirectKeepVerb = 307,
+    RedirectKeepVerb = 307,
 
-        BadRequest = 400,
+    BadRequest = 400,
 
-        Unauthorized = 401,
+    Unauthorized = 401,
 
-        PaymentRequired = 402,
+    PaymentRequired = 402,
 
-        Forbidden = 403,
+    Forbidden = 403,
 
-        NotFound = 404,
+    NotFound = 404,
 
-        MethodNotAllowed = 405,
+    MethodNotAllowed = 405,
 
-        NotAcceptable = 406,
+    NotAcceptable = 406,
 
-        ProxyAuthenticationRequired = 407,
+    ProxyAuthenticationRequired = 407,
 
-        RequestTimeout = 408,
+    RequestTimeout = 408,
 
-        Conflict = 409,
+    Conflict = 409,
 
-        Gone = 410,
+    Gone = 410,
 
-        LengthRequired = 411,
+    LengthRequired = 411,
 
-        PreconditionFailed = 412,
+    PreconditionFailed = 412,
 
-        RequestEntityTooLarge = 413,
+    RequestEntityTooLarge = 413,
 
-        RequestUriTooLong = 414,
-        
-        UnsupportedMediaType = 415,
+    RequestUriTooLong = 414,
 
-        RequestedRangeNotSatisfiable = 416,
+    UnsupportedMediaType = 415,
 
-        ExpectationFailed = 417,
+    RequestedRangeNotSatisfiable = 416,
 
-        UpgradeRequired = 426,
+    ExpectationFailed = 417,
 
-        InternalServerError = 500,
+    UpgradeRequired = 426,
 
-        NotImplemented = 501,
+    InternalServerError = 500,
 
-        BadGateway = 502,
+    NotImplemented = 501,
 
-        ServiceUnavailable = 503,
+    BadGateway = 502,
 
-        GatewayTimeout = 504,
+    ServiceUnavailable = 503,
 
-        HttpVersionNotSupported = 505
+    GatewayTimeout = 504,
+
+    HttpVersionNotSupported = 505,
 }

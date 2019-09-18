@@ -1,12 +1,13 @@
 import {BaseMapper} from '../../../lib/mapping';
 
-import { UserDboModel } from '../../../providers/sequelize/models/user-factory';
+import {UserDboModel} from '../../../providers/sequelize/models/user-factory';
 // to =>
-import { UserModel } from '../models/user-model';
+import {UserModel} from '../models/user-model';
 
 export class UserModelDboMapper extends BaseMapper {
-    public fromDboToUserModel (model: UserDboModel): Promise<TS.MaybeNull<UserModel>> {
-
+    public fromDboToUserModel(
+        model: UserDboModel,
+    ): Promise<TS.MaybeNull<UserModel>> {
         if (!model) {
             return this.empty();
         }
@@ -21,9 +22,12 @@ export class UserModelDboMapper extends BaseMapper {
         return this.beLazy(userModel);
     }
 
-    public async fromDboToUserModelArray (models: UserDboModel[]): Promise<UserModel[]> {
+    public async fromDboToUserModelArray(
+        models: UserDboModel[],
+    ): Promise<UserModel[]> {
         const results = (models || []).map(
-            async (dboModel: UserDboModel) => await this.fromDboToUserModel(dboModel)
+            async (dboModel: UserDboModel) =>
+                await this.fromDboToUserModel(dboModel),
         );
 
         return await Promise.all(results);

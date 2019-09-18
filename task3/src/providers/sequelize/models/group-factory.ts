@@ -1,59 +1,53 @@
-
 import * as sequelize from 'sequelize';
 
-import { SequelizeTypes } from '../local-sequelize';
+import {SequelizeTypes} from '../local-sequelize';
 
 export enum GroupPermission {
-    READ = "Read",
-    WRITE = "Write",
-    DELETE = "DELETE",
-    SHARE = "SHARE",
-    UPLOAD_FILES = "UPLOAD_FILES",
+    READ = 'Read',
+    WRITE = 'Write',
+    DELETE = 'DELETE',
+    SHARE = 'SHARE',
+    UPLOAD_FILES = 'UPLOAD_FILES',
 }
 
 class GroupDboModel extends sequelize.Model {
-    public id: Guid_v4;
+    public id: guidV4;
     public name: string;
     public permissions: GroupPermission;
-};
+}
 
-const GroupFactory = (
-    sequelize: sequelize.Sequelize
-) => {
+const GroupFactory = (sequelize: sequelize.Sequelize) => {
     const columns = {
-        'id': {
+        id: {
             type: SequelizeTypes.STRING,
             primaryKey: true,
             unique: true,
         },
-        'name': {
+        name: {
             type: SequelizeTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
-        'permissions': {
+        permissions: {
             type: SequelizeTypes.ENUM(
                 GroupPermission.READ,
                 GroupPermission.WRITE,
                 GroupPermission.SHARE,
                 GroupPermission.DELETE,
                 GroupPermission.UPLOAD_FILES,
-             ),
-            allowNull: false
+            ),
+            allowNull: false,
         },
     };
 
     const options = {
         sequelize,
         timestamps: false,
-        modelName: 'Group'
-    }
+        modelName: 'Group',
+    };
 
-    GroupDboModel.init(columns, options)
+    GroupDboModel.init(columns, options);
 
     return GroupDboModel;
 };
 
-export {
-    GroupFactory,
-    GroupDboModel
-}
+export {GroupFactory, GroupDboModel};
