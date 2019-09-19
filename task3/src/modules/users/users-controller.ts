@@ -1,15 +1,15 @@
 import {
+    controller,
     httpGet,
     httpPost,
     httpPut,
-    controller,
     requestBody,
     requestParam,
 } from 'inversify-express-utils';
 import {JsonResult} from 'inversify-express-utils/dts/results';
 import {inject} from 'inversify';
 
-import {BaseController} from '../../core/base-controller';
+import {BaseRestController} from '../../core/base-rest-controller';
 import {IUserService} from './users-service';
 import {userTokens} from './tokens';
 
@@ -24,6 +24,28 @@ import {UserModel} from './models/user-model';
 import {providerTokens} from '../../providers/tokens';
 import {AuthProvider} from '../../providers/authorization/auth-provider';
 import {AuthModel} from '../../providers/authorization/auth-model';
+import {HttpFailureResult} from '../../lib/http/http-result';
+import {HttpStatusCode, Status} from '../../lib/http';
+import {AuthValidationError} from '../../providers/authorization/errors/auth-validation-error';
+import {VerificationFailed} from '../../providers/authorization/errors/verification-failed';
+
+const selectAuthFailureResult = (e: Error): HttpFailureResult | void => {
+    if (e instanceof AuthValidationError) {
+        return Status.Error(
+            Api.ErrorCode.AuthError,
+            e.message,
+            HttpStatusCode.Unauthorized,
+        );
+    }
+
+    if (e instanceof VerificationFailed) {
+        return Status.Error(
+            Api.ErrorCode.AuthError,
+            e.message,
+            HttpStatusCode.Unauthorized,
+        );
+    }
+};
 
 const using = {
     userService: userTokens.usersService,
@@ -33,7 +55,7 @@ const using = {
 };
 
 @controller('/users')
-export class UsersController extends BaseController implements App.IController {
+export class UsersController extends BaseRestController implements App.IController {
     @inject(using.userService) private userService: IUserService;
     @inject(using.userDtoMapper) private userMapper: UserDtoMapper;
 
@@ -63,12 +85,25 @@ export class UsersController extends BaseController implements App.IController {
             return this.statusWithValidationErrors(validationResult.result);
         }
 
-        const auth: AuthModel = await this.authProvider.login(
-            data.login,
-            data.password,
-        );
+        try {
+            const auth: AuthModel = await this.authProvider.login(
+                data.login,
+                data.password,
+            );
 
-        return this.successStatus(auth);
+            return this.successStatus(auth);
+        } catch (e) {
+            const result = selectAuthFailureResult(e);
+
+            if (!result) {
+                throw e;
+            }
+
+            return this.failureStatus(
+                result.data,
+                result.statusCode,
+            );
+        }
     }
 
     @httpPost('/create')

@@ -18,11 +18,11 @@ export class UserGroupsRepository extends BaseRepository implements IUserGroupsR
     @inject(dbTokens.userGroupModel) private userGroupModel: typeof UserGroupsDboModel;
 
     public addUsersToGroup(groupId: string, userIds: guidV4[]): Promise<UserDboModel[]> {
-
+        throw new Error("Not implemented yet")
     }
 
     public checkUserHasPermissions(userId: string, permissions: GroupPermission): Promise<number> {
-        console.log("it should works");
+        throw new Error("Not implemented yet")
     }
 
 }

@@ -5,13 +5,13 @@ import {authTokens} from './tokens';
 
 import {AuthProvider} from './auth-provider';
 import {JwtVerifyError} from '../jwt/errors/jwt-verify-error';
-import {Status} from '../../lib/http/http-status';
-import {HttpFailureResult} from 'src/lib/http/http-result';
-import {HttpStatusCode} from 'src/lib/http';
+import {Status} from '../../lib/http';
+import {HttpFailureResult} from '../../lib/http/http-result';
+import {HttpStatusCode} from '../../lib/http';
 import {AuthTokenNotPresented} from './errors/auth-token-not-presented';
 
 const statusAboutInvalidToken = (): HttpFailureResult => {
-    const message = 'unathorized, maybe token expired';
+    const message = 'unauthorized, maybe token expired';
 
     return Status.Error(
         Api.ErrorCode.AuthError,
@@ -58,11 +58,11 @@ export class AuthMiddleware extends BaseMiddleware {
         } catch (e) {
             const result = selectStatus(e);
 
-            if (result) {
-                return res.json(result.data).status(result.statusCode);
+            if (!result) {
+                throw e;
             }
 
-            throw e;
+            return res.json(result.data).status(result.statusCode);
         }
     }
 }

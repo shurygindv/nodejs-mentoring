@@ -10,7 +10,7 @@ export enum GroupPermission {
     UPLOAD_FILES = 'UPLOAD_FILES',
 }
 
-class GroupModel extends sequelize.Model {
+class GroupDboModel extends sequelize.Model {
     public id: guidV4;
     public name: string;
     public permissions: GroupPermission;
@@ -45,9 +45,9 @@ const GroupFactory = (db: Database) => {
         modelName: 'Groups',
     };
 
-    GroupModel.init(columns, options);
+    GroupDboModel.init(columns, options);
 
-    return GroupModel;
+    return GroupDboModel;
 };
 
-export {GroupFactory, GroupModel};
+export {GroupFactory, GroupDboModel};

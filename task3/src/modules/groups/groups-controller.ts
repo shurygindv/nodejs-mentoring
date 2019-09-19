@@ -9,7 +9,7 @@ import {
 import {JsonResult} from 'inversify-express-utils/dts/results';
 import {inject} from 'inversify';
 
-import {BaseController} from '../../core/base-controller';
+import {BaseRestController} from '../../core/base-rest-controller';
 import {IGroupsService} from './groups-service';
 import {groupTokens} from './tokens';
 
@@ -22,10 +22,10 @@ import {EditGroupDto} from './dto/edit-group-dto';
 import {GroupModel} from './models/group-model';
 
 @controller('/groups')
-export class GroupsController extends BaseController
+export class GroupsController extends BaseRestController
     implements App.IController {
-    @inject(groupTokens.GroupsService) private groupService: IGroupsService;
-    @inject(groupTokens.GroupDtoMapper) private groupMapper: GroupDtoMapper;
+    @inject(groupTokens.groupsService) private groupService: IGroupsService;
+    @inject(groupTokens.groupDtoMapper) private groupMapper: GroupDtoMapper;
 
     // TODO: pagination
     @httpGet('/')

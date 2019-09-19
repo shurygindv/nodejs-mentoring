@@ -21,16 +21,10 @@ export class UserGroupsService extends BaseService implements IUserGroupService 
     @inject(userTokens.usersService) private userService: IUserService;
 
     public addUsersToGroup (groupId: string, userIds: guidV4[]): Promise<UserModel[]> {
-        return this.userGroupsRepo.create({
-
-        })
-    }
-
-    public addUserGroups () {
-        return undefined;
+        throw new Error("Not implemented yet")
     }
 
     public checkUserHasPermissions(userId: string, permissions: GroupPermission): Promise<number> {
-        return undefined;
+        throw new Error("Not implemented yet")
     }
 }

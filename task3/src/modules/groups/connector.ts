@@ -11,20 +11,20 @@ import {groupTokens} from './tokens';
 
 export const connectGroupsModule = (container: interfaces.Container) => {
     container
-        .bind<GroupDtoMapper>(groupTokens.GroupDtoMapper)
+        .bind<GroupDtoMapper>(groupTokens.groupDtoMapper)
         .to(GroupDtoMapper);
 
     container
-        .bind<GroupModelDboMapper>(groupTokens.GroupDboMapper)
+        .bind<GroupModelDboMapper>(groupTokens.groupDboMapper)
         .to(GroupModelDboMapper);
 
     container
-        .bind<GroupsController>(groupTokens.GroupsController)
+        .bind<GroupsController>(groupTokens.groupsController)
         .to(GroupsController);
 
-    container.bind<GroupsService>(groupTokens.GroupsService).to(GroupsService);
+    container.bind<GroupsService>(groupTokens.groupsService).to(GroupsService);
 
     container
-        .bind<GroupsRepository>(groupTokens.GroupsRepository)
+        .bind<GroupsRepository>(groupTokens.groupsRepository)
         .to(GroupsRepository);
 };

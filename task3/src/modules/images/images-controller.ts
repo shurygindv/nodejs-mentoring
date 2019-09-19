@@ -2,7 +2,7 @@ import {httpPost, controller, requestBody} from 'inversify-express-utils';
 import {JsonResult} from 'inversify-express-utils/dts/results';
 import {inject} from 'inversify';
 
-import {BaseController} from '../../core/base-controller';
+import {BaseRestController} from '../../core/base-rest-controller';
 import {IImagesService} from './images-service';
 import {imageTokens} from './tokens';
 
@@ -14,7 +14,7 @@ import {ImageModel} from './models/image-model';
 import {ImageDto} from './dto/image-dto';
 
 @controller('/images')
-export class ImagesController extends BaseController
+export class ImagesController extends BaseRestController
     implements App.IController {
     @inject(imageTokens.ImagesService) private imageService: IImagesService;
     @inject(imageTokens.ImageDtoMapper) private mapper: ImageDtoMapper;

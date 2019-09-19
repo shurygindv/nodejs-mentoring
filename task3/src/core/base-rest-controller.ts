@@ -6,7 +6,7 @@ import {HttpStatusCode} from '../lib/http';
 import {Status} from '../lib/http/http-status';
 import {CustomValidationResult, Result} from '../lib/results';
 
-export class BaseController extends BaseHttpController {
+export class BaseRestController extends BaseHttpController {
     public statusWithValidationErrors(
         errors: ValidationError[],
         status?: HttpStatusCode,

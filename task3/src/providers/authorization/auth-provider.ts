@@ -7,8 +7,12 @@ import {providerTokens} from '../tokens';
 import {moduleTokens} from '../../modules/tokens';
 import {IUserService} from '../../modules/users/users-service';
 import {UserModel} from '../../modules/users/models/user-model';
+
 import {AuthValidationError} from './errors/auth-validation-error';
 import {AuthTokenNotPresented} from './errors/auth-token-not-presented';
+import {VerificationFailed} from './errors/verification-failed'
+
+import {NotFoundUserError} from "../../modules/users/errors/not-found-user-error";
 
 const using = {
     userService: moduleTokens.users.usersService,
@@ -20,18 +24,26 @@ export class AuthProvider {
     @inject(using.userService) private usersService: IUserService;
     @inject(using.jwtProvider) private jwtProvider: JwtProvider;
 
-    async validateUser(login: string): Promise<void | never> {
-        const existing: TS.MaybeNull<
-            UserModel
-        > = await this.usersService.getUserByLogin(login);
+    async validateUser(login: string, password: string): Promise<void | never> {
+        let isVerified = false;
 
-        if (!existing) {
-            throw new AuthValidationError('Such user not exists');
+        try {
+            isVerified = await this.usersService.verifyUser(login, password);
+        } catch (e) {
+            if (e instanceof NotFoundUserError) {
+                throw new AuthValidationError('Such user not exists');
+            }
+
+            throw e;
+        }
+
+        if (!isVerified) {
+            throw new VerificationFailed("sent password doesn't match user");
         }
     }
 
     async login(login: string, password: string): Promise<AuthModel> {
-        await this.validateUser(login);
+        await this.validateUser(login, password);
 
         const signedToken: string = await this.jwtProvider.sign({
             login,

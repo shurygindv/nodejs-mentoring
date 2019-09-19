@@ -40,7 +40,7 @@ export declare global {
         }
 
         export enum ErrorCode {
-            AuthError = 0,
+            AuthError = '0',
         }
     }
 

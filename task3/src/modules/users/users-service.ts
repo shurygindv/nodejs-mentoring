@@ -1,4 +1,4 @@
-import {injectable, inject} from 'inversify';
+import {inject, injectable} from 'inversify';
 
 import {Random} from '../../lib/random';
 import {BaseService} from '../../core/base-service';
@@ -10,6 +10,8 @@ import {UserModel} from './models/user-model';
 import {CreateUserServiceError} from './errors/create-user-service-error';
 import {UserModelDboMapper} from './mapping/user-modeldbo-mapper';
 import {NotFoundUserError} from './errors/not-found-user-error';
+import {Encryptor} from "../../lib/encryptor";
+import {UserDboModel} from "../../providers/database/models/users";
 
 export interface IUserService {
     createUser(userModel: UserModel): Promise<UserModel>;
@@ -18,6 +20,8 @@ export interface IUserService {
     getAllUsers(): Promise<UserModel[]>;
     editUserById(id: guidV4, userModel: UserModel): Promise<UserModel>;
     deleteUserById(id: guidV4): Promise<UserModel>;
+
+    verifyUser(login: string, password: string): Promise<boolean>;
 }
 
 @injectable()
@@ -33,11 +37,21 @@ export class UsersService extends BaseService implements IUserService {
             throw new CreateUserServiceError(validationResult.result);
         }
 
-        const id = await Random.guidAsync();
+        const [guid, hashedPassword] = await Promise.all([
+            Random.guidAsync(),
+            Encryptor.hash(userModel.password)
+        ]);
+
+        const recreatedUserModel = new UserModel(
+            guid,
+            userModel.login,
+            hashedPassword,
+            userModel.age
+        );
 
         const outputUserDbo = await this.userRepository.createUser(
-            id,
-            userModel,
+            guid,
+            recreatedUserModel,
         );
 
         return await this.userMapper.fromDboToUserModel(outputUserDbo);
@@ -49,10 +63,24 @@ export class UsersService extends BaseService implements IUserService {
         return await this.userMapper.fromDboToUserModel(outputUserDbo);
     }
 
+    private async getUserDboByLogin (login: string): Promise<TS.MaybeNull<UserDboModel>> {
+        return await this.userRepository.getByLogin(login);
+    }
+
+    public async verifyUser(login: string, password: string): Promise<boolean> {
+        const existing: UserDboModel = await this.getUserDboByLogin(login);
+
+        if (!existing) {
+            throw new NotFoundUserError('User Not Found');
+        }
+
+        return await Encryptor.verify(existing.password, password);
+    }
+
     public async getUserByLogin(
         login: string,
     ): Promise<TS.MaybeNull<UserModel>> {
-        const outputUserDbo = await this.userRepository.getByLogin(login);
+        const outputUserDbo = await this.getUserDboByLogin(login);
 
         return await this.userMapper.fromDboToUserModel(outputUserDbo);
     }

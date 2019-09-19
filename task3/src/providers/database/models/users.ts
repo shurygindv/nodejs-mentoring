@@ -2,16 +2,13 @@ import * as sequelize from 'sequelize';
 
 import {Database, DataTypes} from '../database';
 
-class UserModel extends sequelize.Model {
+class UserDboModel extends sequelize.Model {
    id: guidV4;
    login: string;
    password: string;
    age: number;
 }
 
-interface IUserModel extends UserModel {}
-
-type UserDboModel = typeof UserModel; // hack
 
 const UserFactory = (db: Database) => {
     const columns = {
@@ -40,9 +37,9 @@ const UserFactory = (db: Database) => {
         modelName: 'Users',
     };
 
-    UserModel.init(columns, options);
+    UserDboModel.init(columns, options);
 
-    return UserModel;
+    return UserDboModel;
 };
 
-export {UserModel, UserFactory};
+export {UserDboModel, UserFactory};
