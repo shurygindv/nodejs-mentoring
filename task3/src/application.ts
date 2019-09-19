@@ -11,12 +11,15 @@ import {InversifyExpressServer} from 'inversify-express-utils';
 import {bootstrap} from './bootstrapper';
 import {envConfig} from './config/environment';
 import {Process} from "./lib/process";
-import {HttpStatusCode} from "./lib/http";
+import {HttpStatusCode} from "./lib/http"
+
+const PORT = envConfig.serverPort;
+const API_VERSION = '/api/v1';
 
 const moduleContainer = new Container();
 
 const createServer = (container: Container): InversifyExpressServer =>
-    new InversifyExpressServer(container, null, {rootPath: '/api/v1'});
+    new InversifyExpressServer(container, null, {rootPath: API_VERSION});
 
 const connectModules = (container: Container): void => bootstrap(container);
 
@@ -58,7 +61,7 @@ const setErrorConfig = (app: express.Application): void => {
 };
 
 const sayMeStatus = (): void =>
-    console.log(`Started at ${envConfig.serverPort} port`);
+    console.log(`Started at ${PORT} port`);
 
 
 connectModules(moduleContainer);
@@ -68,4 +71,4 @@ createServer(moduleContainer)
     .setConfig(connectPlugins)
     .setErrorConfig(setErrorConfig)
     .build()
-    .listen(envConfig.serverPort, 'localhost', sayMeStatus);
+    .listen(PORT, 'localhost', sayMeStatus);

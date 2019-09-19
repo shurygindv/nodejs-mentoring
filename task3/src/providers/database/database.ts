@@ -25,6 +25,7 @@ class Database implements IDatabase {
         this.sequelize.sync();
     }
 
+    // not used
     public transaction (options?: TransactionOptions): Promise<Transaction> {
         return this.sequelize.transaction(options);
     }

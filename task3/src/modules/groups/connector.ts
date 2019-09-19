@@ -1,4 +1,4 @@
-import {interfaces} from 'inversify';
+import {Container} from 'inversify';
 
 import {GroupsController} from './groups-controller';
 import {GroupsService, IGroupsService} from './groups-service';
@@ -9,7 +9,7 @@ import {GroupModelDboMapper} from './mapping/group-modeldbo-mapper';
 
 import {groupTokens} from './tokens';
 
-export const connectGroupsModule = (container: interfaces.Container) => {
+export const connectGroupsModule = (container: Container): void => {
     container
         .bind<GroupDtoMapper>(groupTokens.groupDtoMapper)
         .to(GroupDtoMapper);
