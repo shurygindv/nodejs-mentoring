@@ -25,7 +25,7 @@
     "@types/uuid": "^3.4.5",
     "argon2": "^0.24.1",
     "class-transformer": "^0.2.3",
-    "class-validator": "^0.10.0",
+    "class-validator": "^0.14.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
